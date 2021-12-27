@@ -1,0 +1,57 @@
+\documentclass{beamer}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+%
+\title{Towards Socially Responsible AI: Cognitive Bias{-}Aware Multi{-}Objective Learning\newline%
+}%
+%
+\begin{document}%
+\normalsize%
+\maketitle%
+\textbackslash{}frame\{%
+\textbackslash{}frametitle\{%
+figure 0\}%
+\textbackslash{}begin\{figure\}{[}t{]}\newline%
+    \textbackslash{}centering\newline%
+    \textbackslash{}includegraphics{[}width=.75\textbackslash{}columnwidth{]}\{ceo.png\}\newline%
+    \textbackslash{}includegraphics{[}width=.24\textbackslash{}columnwidth{]}\{qc.png\}\newline%
+    \textbackslash{}caption\{Examples of social bias in existing AI systems: `Google Image Search' under{-}representing women as CEOs (left), and `Google query completion' prioritizing \textbackslash{}emph\{appearance\} over \textbackslash{}emph\{filmography\} for a popular female actor (right).\}\newline%
+    \textbackslash{}label\{fig:bias{-}in{-}existing{-}AI{-}tools\}\newline%
+\textbackslash{}end\{figure\}%
+\}%
+\textbackslash{}frame\{%
+\textbackslash{}frametitle\{%
+figure 1\}%
+\textbackslash{}begin\{figure\}{[}t{]}\newline%
+    \textbackslash{}centering\newline%
+    \textbackslash{}includegraphics{[}width=.8\textbackslash{}columnwidth{]}\{bias{-}schematic.pdf\}\newline%
+    \textbackslash{}caption\{Schematic of cognitive bias removal.\}\newline%
+    \textbackslash{}label\{fig:schematic{-}bias\}\newline%
+\textbackslash{}end\{figure\}%
+\}%
+\textbackslash{}frame\{%
+\textbackslash{}frametitle\{%
+figure 2\}%
+\textbackslash{}begin\{figure\}{[}t{]}\newline%
+    \textbackslash{}centering\newline%
+    \textbackslash{}includegraphics{[}width=.85\textbackslash{}columnwidth{]}\{debias{-}architecture.pdf\}\newline%
+    \textbackslash{}caption\{Schematic diagram of a neural network architecture for \textbackslash{}emph\{jointly\} learning the primary task objective (for effective prediction) and a set of debiasing tasks (for reducing the cognitive bias in these predictions).\}\newline%
+\textbackslash{}label\{fig:deBiasArch\}\newline%
+\textbackslash{}end\{figure\}%
+\}%
+\textbackslash{}frame\{%
+\textbackslash{}frametitle\{%
+figure 3\}%
+\textbackslash{}begin\{figure\}{[}t{]}\newline%
+\textbackslash{}centering\newline%
+\textbackslash{}includegraphics{[}width=0.49\textbackslash{}columnwidth{]}\{biased\_boundary.png\}\newline%
+\textbackslash{}includegraphics{[}width=0.49\textbackslash{}columnwidth{]}\{debiased\_boundary.png\}\newline%
+\textbackslash{}caption\{Illustrative example to visualize bias reduction with multi{-}objective learning (Equation \textbackslash{}ref\{eq:jointloss\}). Predictions\newline%
+with a bias{-}agnostic classifier (logistic regression with \$L\_2\$ regularization) are effective but exhibits a `bias' in associating the green points with the top half of the plot area (left); whereas the multi{-}objective learning is able to reduce such a bias (right).\newline%
+\textbackslash{}label\{fig:2d{-}data\}\}\newline%
+\textbackslash{}end\{figure\}%
+\}%
+\end{document}
