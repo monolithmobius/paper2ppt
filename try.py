@@ -102,6 +102,36 @@ print("\n--------------------------------paragraph latex-----------------------\
 print(paragraphs_tex_list)
 print("\n--------------------------------paragraph latex end-----------------------\n")
 
+#slide paper section
+print("\n--------------------------slide paper section-----------------------------------------------\n")
+sec1 = sections_tex_list[0]
+sec2 = sections_tex_list[1]
+print(sec1,sec2)
+sec = ''
+sec_list = []
+flag = False
+with open('AAAI-SenP.1698.tex','r') as f:
+   # content = f.read()
+    for line in f.readlines():
+    #    print("linennnnnnnnnnnnnnnnnnnnnnnn")
+    #    print(line)
+        if line[1:8] == 'section':
+            print(line)
+            flag = True
+        if flag:
+           # print(line)
+            sec+=line
+    print("\nsec\n")
+    print(sec)
+       # if flag and line[1:8] == 'section':
+    print("\nsec\n")
+
+f.close()
+print("\n~~~~~~~~~~sec list~~~~~~~~~~~~~~~\n")
+print(sec_list)
+print("\n~~~~~~~~~~sec list end~~~~~~~~~~~~~~~\n")
+print("\n--------------------------slide paper section end-------------------------------------------\n")
+
 
 #ai text summarization
 def remove_punctuation_marks(text):
@@ -154,10 +184,6 @@ documents = nltk.sent_tokenize(text)
 
 tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
                                 stop_words=stopwords.words('english')).fit_transform(documents)
-#slide paper section
-print("\n--------------------------slide paper section-----------------------------------------------\n")
-print(get_summary(documents, tfidf_results))
-print("\n--------------------------slide paper section end-------------------------------------------\n")
 
 #paper summary
 print("\n--------------------------summary of all---------------------------------------------------\n")
