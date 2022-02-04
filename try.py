@@ -133,6 +133,9 @@ with open('AAAI-SenP.1698.tex','r') as f:
 f.close()
 print("\n~~~~~~~~~~sec list~~~~~~~~~~~~~~~\n")
 print(sec_list)
+print('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\n')
+for i in sec_list:
+    print(i,'ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\n')
 print("\n~~~~~~~~~~sec list end~~~~~~~~~~~~~~~\n")
 print("\n--------------------------slide paper section end-------------------------------------------\n")
 
