@@ -110,6 +110,7 @@ print(sec1,sec2)
 sec = ''
 sec_list = []
 flag = False
+flag2 = False
 with open('AAAI-SenP.1698.tex','r') as f:
    # content = f.read()
     for line in f.readlines():
@@ -119,8 +120,11 @@ with open('AAAI-SenP.1698.tex','r') as f:
             print(line)
             flag = True
         if flag:
-           # print(line)
             sec+=line
+         # print(line)
+            if line[1:8] == 'section':
+                sec_list.append(sec)
+                sec = ''
     print("\nsec\n")
     print(sec)
        # if flag and line[1:8] == 'section':
