@@ -1,16 +1,15 @@
 ################################################################
-#################whatever experiment area###################
+#################on the way new product###################
+
 
 #unzip
 import zipfile
 #latex parser
 from TexSoup import TexSoup
-
     #latex parser to extract string of image name from tex
 from TexSoup.category import categorize
 from TexSoup.tokens import tokenize
 from TexSoup.reader import read_item
-
 #latex generator
 from pylatex import Document, Section, Subsection, Command, Figure
 from pylatex.utils import italic, NoEscape
@@ -50,24 +49,19 @@ with open(tx_process) as f:
 
 #retrieve paper title
 slide_title = soup.title[0]
-print("--------------------------------title latex-----------------------\n")
-print(slide_title)
-print("--------------------------------title latex end-----------------------\n")
 
+doc = Document(documentclass="beamer")
 
+doc.preamble.append(Command('title', slide_title))
+doc.append(NoEscape(r'\maketitle'))
 #retrieve paper figures
-figures_tex_list = soup.find_all('figure')
-print("--------------------------------figure latex-----------------------\n")
-print(figures_tex_list)
-print("--------------------------------figure latex end-----------------------\n")
-
-
-
-print("--------------------------------figure name-----------------------\n")
 def read_item_from(string, skip=2):
     buf = tokenize(categorize(string))
     _ = buf.forward(skip)
     return read_item(buf)
+
+figures_tex_list = soup.find_all('figure')
+
 i = 0
 for img in figures_tex_list:
     item_image = read_item_from(str(img.includegraphics))
@@ -75,35 +69,33 @@ for img in figures_tex_list:
     image = item_image[-1]
     image = image.contents[0]
     print("\n image:",image)
-print("--------------------------------figure name end-----------------------\n")
+    doc.append("image"+str(i))
+    with doc.create(Figure()) as a_graph:
+        a_graph.add_image(image)
+        a_graph.add_caption(image)
 
-
-#retrieve paper tables
+'''
+#retrieve paper table
 tables_tex_list = soup.find_all('table')
-print("\n--------------------------------table latex-----------------------\n")
 print(tables_tex_list)
-print("\n--------------------------------table latex end-----------------------\n")
+'''
 
-#retrieve paper equations
-equations_tex_list = soup.find_all('equation')
-print("\n--------------------------------equation latex-----------------------\n")
-print(equations_tex_list)
-print("\n--------------------------------equation latex end-----------------------\n")
-
-#retrieve paper sections
-sections_tex_list = soup.find_all('section')
-print("\n--------------------------------section latex-----------------------\n")
-print(sections_tex_list)
-print("\n--------------------------------section latex end-----------------------\n")
-
-#retrieve paper sections
-paragraphs_tex_list = soup.find_all('paragraph')
-print("\n--------------------------------paragraph latex-----------------------\n")
-print(paragraphs_tex_list)
-print("\n--------------------------------paragraph latex end-----------------------\n")
-
+'''
+i = 0
+for img in tables_tex_list:
+    item_image = read_item_from(str(img.includegraphics))
+    print("\n item image:",img)
+    image = item_image[-1]
+    image = image.contents[0]
+    print("\n image:",image)
+    doc.append("image"+str(i))
+    with doc.create(Figure()) as a_graph:
+        a_graph.add_image(image)
+        a_graph.add_caption(image)
+'''
 
 #ai text summarization
+
 def remove_punctuation_marks(text):
     punctuation_marks = dict((ord(punctuation_mark), None) for punctuation_mark in string.punctuation)
     return text.translate(punctuation_marks)
@@ -154,16 +146,13 @@ documents = nltk.sent_tokenize(text)
 
 tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
                                 stop_words=stopwords.words('english')).fit_transform(documents)
-#slide paper section
-print("\n--------------------------slide paper section-----------------------------------------------\n")
+
+print("\n-----------------------------------------------------------------------------------\n")
 print(get_summary(documents, tfidf_results))
-print("\n--------------------------slide paper section end-------------------------------------------\n")
+print("\n-----------------------------------------------------------------------------------\n")
 
-#paper summary
-print("\n--------------------------summary of all---------------------------------------------------\n")
-print(get_summary(documents, tfidf_results))
-print("\n--------------------------summary end---------------------------------------------------------\n")
-
-
+#generate latex
+doc.generate_tex()
+doc.generate_pdf('presentation_neat', clean_tex=False)
 
 

@@ -1,8 +1,12 @@
+################################################################
+#################the currently newest product###################
+
+
 #unzip
 import zipfile
 #latex parser
 from TexSoup import TexSoup
-  #latex parser to do extract string of image name from tex
+#latex parser to do extract string of image name from tex
 from TexSoup.category import categorize
 from TexSoup.tokens import tokenize
 from TexSoup.reader import read_item
@@ -17,6 +21,7 @@ z = zipfile.ZipFile(zip, "r")
 z.extractall()
 z.close()
 
+#remove latex comment
 tx = tx_process = 'AAAI-SenP.1698.tex'
 f = open(tx,'r')
 a = f.readlines()
@@ -28,24 +33,26 @@ for i in a:
         f.write(i)
 f.close()
 
+#make TexSoup object to do parsing
 with open(tx_process) as f:
     soup = TexSoup(f)
 
+#retrieve paper title
 slide_title = soup.title[0]
-
-print("soup figure:",soup.find_all('figure'))
-print("\n figures are above \n")
-figures_tex_list = soup.find_all('figure')
 
 doc = Document(documentclass="beamer")
 
 doc.preamble.append(Command('title', slide_title))
 doc.append(NoEscape(r'\maketitle'))
-
+#retrieve paper figure
 def read_item_from(string, skip=2):
     buf = tokenize(categorize(string))
     _ = buf.forward(skip)
     return read_item(buf)
+
+print("soup figure:",soup.find_all('figure'))
+print("\n figures are above \n")
+figures_tex_list = soup.find_all('figure')
 
 i = 0
 for img in figures_tex_list:
@@ -56,7 +63,7 @@ for img in figures_tex_list:
     print("\n image:",image)
     doc.append("image"+str(i))
     with doc.create(Figure()) as a_graph:
-# Figure(position='h!')
+#Figure(position='h!')
 #a_graph.add_image(image, width='120px')
         a_graph.add_image(image)
         a_graph.add_caption(image)
