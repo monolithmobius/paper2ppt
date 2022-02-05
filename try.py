@@ -91,51 +91,65 @@ print(equations_tex_list)
 print("\n--------------------------------equation latex end-----------------------\n")
 
 # retrieve paper sections
-sections_tex_list = soup.find_all('section')
-print("\n--------------------------------section latex-----------------------\n")
-print(sections_tex_list)
-print("\n--------------------------------section latex end-----------------------\n")
-
-# retrieve paper sections
 paragraphs_tex_list = soup.find_all('paragraph')
 print("\n--------------------------------paragraph latex-----------------------\n")
 print(paragraphs_tex_list)
 print("\n--------------------------------paragraph latex end-----------------------\n")
 
+# retrieve paper sections
+sections_tex_list = soup.find_all('section')
+print("\n--------------------------------section latex-----------------------\n")
+print(sections_tex_list)
+print("\n--------------------------------section latex end-----------------------\n")
+
+
 # slide paper section
 print("\n--------------------------slide paper section-----------------------------------------------\n")
-sec1 = sections_tex_list[0]
-sec2 = sections_tex_list[1]
-print(sec1, sec2)
 sec = ''
 sec_list = []
+sec_title_list = []
+line_n_count1 = 0
+line_n_count2 = 0
 flag = 0
 with open('AAAI-SenP.1698.tex', 'r') as f:
     # content = f.read()
     for line in f.readlines():
         #    print("linennnnnnnnnnnnnnnnnnnnnnnn")
         #    print(line)
+        line_n_count1 += 1
+
+f.close()
+with open('AAAI-SenP.1698.tex', 'r') as f:
+    # content = f.read()
+    for line in f.readlines():
+        #    print("linennnnnnnnnnnnnnnnnnnnnnnn")
+        #    print(line)
+        line_n_count2 += 1
+        if line_n_count2 == line_n_count1:
+            sec += line
+            sec_list.append(sec)
+            break
         if line[1:8] == 'section' and flag == 0:
             sec += line
+            sec_title_list.append(line)
             flag = 1
             continue
         if flag == 1:
             if line[1:8] == 'section':
                 sec_list.append(sec)
+                sec_title_list.append(line)
                 sec = ''
             sec += line
-    print("\nsec\n")
-    print(sec)
-    # if flag and line[1:8] == 'section':
-    print("\nsec\n")
 
 f.close()
-print("\n~~~~~~~~~~sec list~~~~~~~~~~~~~~~\n")
-print(sec_list)
 print('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\n')
 for i in sec_list:
-    print(i, 'ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\n')
-print("\n~~~~~~~~~~sec list end~~~~~~~~~~~~~~~\n")
+    print(i, '\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\n')
+
+print("\n~~~~~~~~~~sec title list~~~~~~~~~~~~~~~\n")
+print(sec_title_list)
+print("\n~~~~~~~~~~sec title list end~~~~~~~~~~~~~~~\n")
+
 print("\n--------------------------slide paper section end-------------------------------------------\n")
 
 
