@@ -103,8 +103,8 @@ print(sections_tex_list)
 print("\n--------------------------------section latex end-----------------------\n")
 
 
-# slide paper section
-print("\n--------------------------slide paper section-----------------------------------------------\n")
+# slice text section
+print("\n--------------------------slice text section-----------------------------------------------\n")
 sec = ''
 sec_list = []
 sec_title_list = []
@@ -150,7 +150,7 @@ print("\n~~~~~~~~~~sec title list~~~~~~~~~~~~~~~\n")
 print(sec_title_list)
 print("\n~~~~~~~~~~sec title list end~~~~~~~~~~~~~~~\n")
 
-print("\n--------------------------slide paper section end-------------------------------------------\n")
+print("\n--------------------------slice text section end-------------------------------------------\n")
 
 
 # ai text summarization
