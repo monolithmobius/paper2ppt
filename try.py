@@ -104,7 +104,7 @@ print("\n--------------------------------section latex end----------------------
 
 
 # slice text section
-print("\n--------------------------slice text section-----------------------------------------------\n")
+print("\n--------------------------slice paper section-----------------------------------------------\n")
 sec = ''
 sec_list = []
 sec_title_list = []
@@ -117,8 +117,8 @@ with open('AAAI-SenP.1698.tex', 'r') as f:
         #    print("linennnnnnnnnnnnnnnnnnnnnnnn")
         #    print(line)
         line_n_count1 += 1
-
 f.close()
+
 with open('AAAI-SenP.1698.tex', 'r') as f:
     # content = f.read()
     for line in f.readlines():
@@ -140,17 +140,14 @@ with open('AAAI-SenP.1698.tex', 'r') as f:
                 sec_title_list.append(line)
                 sec = ''
             sec += line
-
 f.close()
+
 print('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\n')
 for i in sec_list:
     print(i, '\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\n')
 
-print("\n~~~~~~~~~~sec title list~~~~~~~~~~~~~~~\n")
-print(sec_title_list)
-print("\n~~~~~~~~~~sec title list end~~~~~~~~~~~~~~~\n")
 
-print("\n--------------------------slice text section end-------------------------------------------\n")
+print("\n--------------------------slice paper section end-------------------------------------------\n")
 
 
 # ai text summarization
@@ -210,10 +207,10 @@ documents = nltk.sent_tokenize(text)
 tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
                                 stop_words=stopwords.words('english')).fit_transform(documents)
 
-# paper summary
+#whole paper summary
 print("\n--------------------------summary of all---------------------------------------------------\n")
-print(get_summary(documents, tfidf_results))
+#print(get_summary(documents, tfidf_results))
 print("\n--------------------------summary end---------------------------------------------------------\n")
 
 
-
+#one section trail
