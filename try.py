@@ -5,15 +5,15 @@
 import zipfile
 # latex parser
 from TexSoup import TexSoup
-
 # latex parser to extract string of image name from tex
 from TexSoup.category import categorize
 from TexSoup.tokens import tokenize
 from TexSoup.reader import read_item
-
+'''
 # latex generator
 from pylatex import Document, Section, Subsection, Command, Figure
 from pylatex.utils import italic, NoEscape
+'''
 # text summarization
 import nltk
 import random
@@ -50,17 +50,17 @@ with open(tx_process) as f:
 
 # retrieve paper title
 slide_title = soup.title[0]
-print("--------------------------------title latex-----------------------\n")
+print("--------------------------------retrieve title latex-----------------------\n")
 print(slide_title)
-print("--------------------------------title latex end-----------------------\n")
+print("--------------------------------retrieve title latex end-----------------------\n")
 
 # retrieve paper figures
 figures_tex_list = soup.find_all('figure')
-print("--------------------------------figure latex-----------------------\n")
+print("--------------------------------retrieve figure latex-----------------------\n")
 print(figures_tex_list)
-print("--------------------------------figure latex end-----------------------\n")
+print("--------------------------------retrieve figure latex end-----------------------\n")
 
-print("--------------------------------figure name-----------------------\n")
+print("--------------------------------retrieve figure name-----------------------\n")
 
 
 def read_item_from(string, skip=2):
@@ -76,35 +76,35 @@ for img in figures_tex_list:
     image = item_image[-1]
     image = image.contents[0]
     print("\n image:", image)
-print("--------------------------------figure name end-----------------------\n")
+print("--------------------------------retrieve figure name end-----------------------\n")
 
 # retrieve paper tables
 tables_tex_list = soup.find_all('table')
-print("\n--------------------------------table latex-----------------------\n")
+print("\n--------------------------------retrieve table latex-----------------------\n")
 print(tables_tex_list)
-print("\n--------------------------------table latex end-----------------------\n")
+print("\n-------------------------------retrieve table latex end-----------------------\n")
 
 # retrieve paper equations
 equations_tex_list = soup.find_all('equation')
-print("\n--------------------------------equation latex-----------------------\n")
+print("\n--------------------------------retrieve equation latex-----------------------\n")
 print(equations_tex_list)
-print("\n--------------------------------equation latex end-----------------------\n")
+print("\n-----------------------------retrieve equation latex end-----------------------\n")
 
-# retrieve paper sections
+# retrieve paper paragraph
 paragraphs_tex_list = soup.find_all('paragraph')
-print("\n--------------------------------paragraph latex-----------------------\n")
+print("\n--------------------------------retrieve paragraph latex-----------------------\n")
 print(paragraphs_tex_list)
-print("\n--------------------------------paragraph latex end-----------------------\n")
+print("\n-----------------------------retrieve paragraph latex end-----------------------\n")
 
 # retrieve paper sections
 sections_tex_list = soup.find_all('section')
-print("\n--------------------------------section latex-----------------------\n")
+print("\n----------------------------retrieve section latex-----------------------\n")
 print(sections_tex_list)
-print("\n--------------------------------section latex end-----------------------\n")
+print("\n----------------------------retrieve section latex end-----------------------\n")
 
 
 # slice text section
-print("\n--------------------------slice paper section-----------------------------------------------\n")
+print("\n----------------------slice paper section-----------------------------------------------\n")
 sec = ''
 sec_list = []
 sec_title_list = []
@@ -112,18 +112,12 @@ line_n_count1 = 0
 line_n_count2 = 0
 flag = 0
 with open('AAAI-SenP.1698.tex', 'r') as f:
-    # content = f.read()
     for line in f.readlines():
-        #    print("linennnnnnnnnnnnnnnnnnnnnnnn")
-        #    print(line)
         line_n_count1 += 1
 f.close()
 
 with open('AAAI-SenP.1698.tex', 'r') as f:
-    # content = f.read()
     for line in f.readlines():
-        #    print("linennnnnnnnnnnnnnnnnnnnnnnn")
-        #    print(line)
         line_n_count2 += 1
         if line_n_count2 == line_n_count1:
             sec += line
@@ -213,4 +207,69 @@ print("\n--------------------------summary of all-------------------------------
 print("\n--------------------------summary end---------------------------------------------------------\n")
 
 
-#one section trail
+#one section decomposition
+section1 = sec_list[0]
+print("\n--------------------------see a section---------------------------------------------------\n")
+print(section1)
+print("\n--------------------------see a section end---------------------------------------------------------\n")
+print("\n--------------------------summarize a section--------------------------------------------\n")
+documents = nltk.sent_tokenize(section1)
+tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
+                                stop_words=stopwords.words('english')).fit_transform(documents)
+print(get_summary(documents, tfidf_results))
+print("\n--------------------------summarize a section end----------------------------------------\n")
+soup_section = TexSoup(section1)
+print("--------------------------------retrieve section title-----------------------\n")
+a_sec_title= soup_section.section.string
+print(a_sec_title)
+print("--------------------------------retrieve section title end-----------------------\n")
+print("--------------------------------retrieve section figures-----------------------\n")
+a_sec_figures = soup_section.find_all('figure')
+print(a_sec_figures)
+print("--------------------------------retrieve section figures end-----------------------\n")
+print("--------------------------------retrieve section tables-----------------------\n")
+a_sec_tables = soup_section.find_all('table')
+print(a_sec_tables)
+print("--------------------------------retrieve section tables end-----------------------\n")
+
+print("--------------------------------retrieve section equations-----------------------\n")
+a_sec_equations = soup_section.find_all('equation')
+print(a_sec_equations)
+print("--------------------------------retrieve section equations end-----------------------\n")
+print("--------------------------------slide section paragraphs-----------------------\n")
+
+'''
+# slice text section paragraph
+print("\n----------------------slice paragraphs of a section-----------------------------------------------\n")
+para = ''
+sec_para = []
+sec_para_title_list = []
+sec_line_n_count1 = len(section1.splitlines())
+sec_line_n_count2 = 0
+para_flag = 0
+
+
+for line in section1.splitlines():
+    print(line)
+    sec_line_n_count2 += 1
+    if sec_line_n_count2 == sec_line_n_count1:
+        para += line
+        sec_para.append(para)
+        break
+    if line[1:10] == 'paragraph' and para_flag == 0:
+        para += line
+        sec_para_title_list.append(line)
+        para_flag = 1
+        continue
+    if flag == 1:
+        if line[1:10] == 'paragraph':
+            sec_para.append(para)
+            sec_para_title_list.append(para)
+            para = ''
+        para += line
+
+print('\nppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\n')
+for i in sec_para:
+    print(i, '\nppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\n')
+print("\n--------------------------------slide section paragraphs end-----------------------\n")
+'''
