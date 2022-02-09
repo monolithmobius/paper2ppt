@@ -21,6 +21,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import string
 import warnings
 from nltk.corpus import stopwords
+#generate ppt pdf from latex
+from pdflatex import PDFLaTeX
 
 nltk.download('stopwords')
 
@@ -198,9 +200,10 @@ print("\n--------------------------summarize a section--------------------------
 documents = nltk.sent_tokenize(section1)
 tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
                                 stop_words=stopwords.words('english')).fit_transform(documents)
-print(get_summary(documents, tfidf_results))
+section_summary=get_summary(documents, tfidf_results).split('\n')
 print("\n--------------------------summarize a section end----------------------------------------\n")
 soup_section = TexSoup(section1)
+print(soup_section)
 print("--------------------------------retrieve section title-----------------------\n")
 a_sec_title= soup_section.section.string
 print(a_sec_title)
@@ -218,6 +221,64 @@ print("--------------------------------retrieve section equations---------------
 a_sec_equations = soup_section.find_all('equation')
 print(a_sec_equations)
 print("--------------------------------retrieve section equations end-----------------------\n")
-print("--------------------------------slide section paragraphs-----------------------\n")
-# slice text section paragraph
-print("\n----------------------slice paragraphs of a section-----------------------------------------------\n")
+def add_text_frame(text_list, frame_name, beamer_file):
+    """
+    add a frame containing itemize texts into a beamer file
+    :param text_list: list of text
+    :param frame_name: str
+    :param beamer_file: file handle
+    :return:
+    """
+    beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
+    beamer_file.writelines(r'%' + '\n')
+    beamer_file.writelines(r'\begin{itemize}' + '\n')
+    for txt in text_list:
+        beamer_file.writelines(r'\item' + '\n')
+        beamer_file.writelines(txt + '\n')
+    beamer_file.writelines(r'\end{itemize}' + '\n')
+    beamer_file.writelines(r'\end{frame}' + '\n')
+    beamer_file.writelines(r'%' + '\n')
+
+def add_figure_frame(fig_str, frame_name, beamer_file):
+    """
+    add a frame containing a single figure into a beamer file
+    :param fig_str: maybe directly use extracted figure?
+    :param frame_name: str
+    :param beamer_file: file handle
+    :return:
+    """
+    # ToDo: type checking for fig_str
+    for fig in fig_str:
+        fig_str = str(fig)
+        beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
+        beamer_file.writelines(r'%' + '\n')
+        beamer_file.writelines(fig_str + '\n')
+        beamer_file.writelines(r'\end{frame}' + '\n')
+        beamer_file.writelines(r'%' + '\n')
+
+with open('presentation_test.tex', 'w') as tex_f:
+    # headers and packages
+    tex_f.writelines(r'\documentclass{beamer}' + '\n')
+    tex_f.writelines(r'\usepackage[T1]{fontenc}' + '\n')
+    tex_f.writelines(r'\usepackage[utf8]{inputenc}' + '\n')
+    tex_f.writelines(r'\usepackage{lmodern}' + '\n')
+    tex_f.writelines(r'\usepackage{textcomp}' + '\n')
+    tex_f.writelines(r'\usepackage{lastpage}' + '\n')
+    tex_f.writelines(r'%' + '\n')
+    tex_f.writelines(r'\title{}'.format('{' + slide_title + '}') + '\n')
+    tex_f.writelines(r'%' + '\n')
+    tex_f.writelines(r'\begin{document}' + '\n')
+    tex_f.writelines(r'\normalsize' + '\n')
+    tex_f.writelines(r'\maketitle' + '\n')
+    tex_f.writelines(r'%' + '\n')
+
+    add_text_frame(section_summary, 'Introduction', tex_f)
+
+    add_figure_frame(a_sec_figures, 'Introduction', tex_f)
+
+    tex_f.writelines(r'\end{document}' + '\n')
+
+
+
+pdfl = PDFLaTeX.from_texfile('presentation_test.tex')
+pdf, log, completed_process = pdfl.create_pdf(keep_pdf_file=True, keep_log_file=True)
