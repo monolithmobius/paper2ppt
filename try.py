@@ -219,7 +219,5 @@ a_sec_equations = soup_section.find_all('equation')
 print(a_sec_equations)
 print("--------------------------------retrieve section equations end-----------------------\n")
 print("--------------------------------slide section paragraphs-----------------------\n")
-
-
 # slice text section paragraph
 print("\n----------------------slice paragraphs of a section-----------------------------------------------\n")
