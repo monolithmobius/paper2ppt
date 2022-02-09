@@ -247,7 +247,7 @@ def add_figure_frame(fig_str, frame_name, beamer_file):
     :param beamer_file: file handle
     :return:
     """
-    # ToDo: type checking for fig_str
+
     for fig in fig_str:
         fig_str = str(fig)
         beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
