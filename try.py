@@ -60,24 +60,6 @@ print("--------------------------------retrieve figure latex--------------------
 print(figures_tex_list)
 print("--------------------------------retrieve figure latex end-----------------------\n")
 
-print("--------------------------------retrieve figure name-----------------------\n")
-
-
-def read_item_from(string, skip=2):
-    buf = tokenize(categorize(string))
-    _ = buf.forward(skip)
-    return read_item(buf)
-
-
-i = 0
-for img in figures_tex_list:
-    item_image = read_item_from(str(img.includegraphics))
-    print("\n item image:", img)
-    image = item_image[-1]
-    image = image.contents[0]
-    print("\n image:", image)
-print("--------------------------------retrieve figure name end-----------------------\n")
-
 # retrieve paper tables
 tables_tex_list = soup.find_all('table')
 print("\n--------------------------------retrieve table latex-----------------------\n")
@@ -238,38 +220,6 @@ print(a_sec_equations)
 print("--------------------------------retrieve section equations end-----------------------\n")
 print("--------------------------------slide section paragraphs-----------------------\n")
 
-'''
+
 # slice text section paragraph
 print("\n----------------------slice paragraphs of a section-----------------------------------------------\n")
-para = ''
-sec_para = []
-sec_para_title_list = []
-sec_line_n_count1 = len(section1.splitlines())
-sec_line_n_count2 = 0
-para_flag = 0
-
-
-for line in section1.splitlines():
-    print(line)
-    sec_line_n_count2 += 1
-    if sec_line_n_count2 == sec_line_n_count1:
-        para += line
-        sec_para.append(para)
-        break
-    if line[1:10] == 'paragraph' and para_flag == 0:
-        para += line
-        sec_para_title_list.append(line)
-        para_flag = 1
-        continue
-    if flag == 1:
-        if line[1:10] == 'paragraph':
-            sec_para.append(para)
-            sec_para_title_list.append(para)
-            para = ''
-        para += line
-
-print('\nppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\n')
-for i in sec_para:
-    print(i, '\nppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\n')
-print("\n--------------------------------slide section paragraphs end-----------------------\n")
-'''
