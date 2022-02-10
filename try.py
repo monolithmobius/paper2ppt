@@ -124,7 +124,6 @@ print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 for i in sec_list:
     print(i, '\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\n')
 
-
 print("\n--------------------------slice paper section end-------------------------------------------\n")
 
 
@@ -190,45 +189,8 @@ print("\n--------------------------summary of all-------------------------------
 #print(get_summary(documents, tfidf_results))
 print("\n--------------------------summary end---------------------------------------------------------\n")
 
-
-#one section decomposition
-section1 = sec_list[0]
-print("\n--------------------------see a section---------------------------------------------------\n")
-print(section1)
-print("\n--------------------------see a section end---------------------------------------------------------\n")
-print("\n--------------------------summarize a section--------------------------------------------\n")
-documents = nltk.sent_tokenize(section1)
-tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
-                                stop_words=stopwords.words('english')).fit_transform(documents)
-section_summary=get_summary(documents, tfidf_results).split('\n')
-print("\n--------------------------summarize a section end----------------------------------------\n")
-soup_section = TexSoup(section1)
-print(soup_section)
-print("--------------------------------retrieve section title-----------------------\n")
-a_sec_title= soup_section.section.string
-print(a_sec_title)
-print("--------------------------------retrieve section title end-----------------------\n")
-print("--------------------------------retrieve section figures-----------------------\n")
-a_sec_figures = soup_section.find_all('figure')
-print(a_sec_figures)
-print("--------------------------------retrieve section figures end-----------------------\n")
-print("--------------------------------retrieve section tables-----------------------\n")
-a_sec_tables = soup_section.find_all('table')
-print(a_sec_tables)
-print("--------------------------------retrieve section tables end-----------------------\n")
-
-print("--------------------------------retrieve section equations-----------------------\n")
-a_sec_equations = soup_section.find_all('equation')
-print(a_sec_equations)
-print("--------------------------------retrieve section equations end-----------------------\n")
 def add_text_frame(text_list, frame_name, beamer_file):
-    """
-    add a frame containing itemize texts into a beamer file
-    :param text_list: list of text
-    :param frame_name: str
-    :param beamer_file: file handle
-    :return:
-    """
+
     beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
     beamer_file.writelines(r'%' + '\n')
     beamer_file.writelines(r'\begin{itemize}' + '\n')
@@ -240,19 +202,31 @@ def add_text_frame(text_list, frame_name, beamer_file):
     beamer_file.writelines(r'%' + '\n')
 
 def add_figure_frame(fig_str, frame_name, beamer_file):
-    """
-    add a frame containing a single figure into a beamer file
-    :param fig_str: maybe directly use extracted figure?
-    :param frame_name: str
-    :param beamer_file: file handle
-    :return:
-    """
 
     for fig in fig_str:
         fig_str = str(fig)
         beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
         beamer_file.writelines(r'%' + '\n')
         beamer_file.writelines(fig_str + '\n')
+        beamer_file.writelines(r'\end{frame}' + '\n')
+        beamer_file.writelines(r'%' + '\n')
+
+def add_table_frame(table_str, frame_name, beamer_file):
+
+    for table in table_str:
+        table_str = str(table)
+        beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
+        beamer_file.writelines(r'%' + '\n')
+        beamer_file.writelines(table_str + '\n')
+        beamer_file.writelines(r'\end{frame}' + '\n')
+        beamer_file.writelines(r'%' + '\n')
+
+def add_equation_frame(equation_str, frame_name, beamer_file):
+    for equation in equation_str:
+        beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
+        beamer_file.writelines(r'%' + '\n')
+        equation_str = str(equation)
+        beamer_file.writelines(equation_str + '\n')
         beamer_file.writelines(r'\end{frame}' + '\n')
         beamer_file.writelines(r'%' + '\n')
 
@@ -272,13 +246,45 @@ with open('presentation_test.tex', 'w') as tex_f:
     tex_f.writelines(r'\maketitle' + '\n')
     tex_f.writelines(r'%' + '\n')
 
-    add_text_frame(section_summary, 'Introduction', tex_f)
+ #  add_text_frame(section_summary, 'Introduction', tex_f)
+    for section_sample in sec_list:
+        # one section decomposition
+        print("\n--------------------------see a section---------------------------------------------------\n")
+        print(section_sample)
+        print(
+            "\n--------------------------see a section end---------------------------------------------------------\n")
+        print("\n--------------------------summarize a section--------------------------------------------\n")
+        documents = nltk.sent_tokenize(section_sample)
+        tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
+                                        stop_words=stopwords.words('english')).fit_transform(documents)
+        section_summary = get_summary(documents, tfidf_results).split('\n')
+        print("\n--------------------------summarize a section end----------------------------------------\n")
+        soup_section = TexSoup(section_sample)
+        print(soup_section)
+        print("--------------------------------retrieve section title-----------------------\n")
+        a_sec_title = soup_section.section.string
+        print(a_sec_title)
+        print("--------------------------------retrieve section title end-----------------------\n")
+        print("--------------------------------retrieve section figures-----------------------\n")
+        a_sec_figures = soup_section.find_all('figure')
+        print(a_sec_figures)
+        print("--------------------------------retrieve section figures end-----------------------\n")
+        print("--------------------------------retrieve section tables-----------------------\n")
+        a_sec_tables = soup_section.find_all('table')
+        print(a_sec_tables)
+        print("--------------------------------retrieve section tables end-----------------------\n")
 
-    add_figure_frame(a_sec_figures, 'Introduction', tex_f)
+        print("--------------------------------retrieve section equations-----------------------\n")
+        a_sec_equations = soup_section.find_all('equation')
+        print(a_sec_equations)
+        print("--------------------------------retrieve section equations end-----------------------\n")
+        add_text_frame(['abd','def','ghi','jkl'], a_sec_title, tex_f)
+        add_figure_frame(a_sec_figures, a_sec_title, tex_f)
+        add_table_frame(a_sec_tables,a_sec_title,tex_f)
+        add_equation_frame(a_sec_equations, a_sec_title, tex_f)
 
     tex_f.writelines(r'\end{document}' + '\n')
 
+print(sec_title_list)
 
 
-pdfl = PDFLaTeX.from_texfile('presentation_test.tex')
-pdf, log, completed_process = pdfl.create_pdf(keep_pdf_file=True, keep_log_file=True)
