@@ -380,7 +380,7 @@ print("--------------------------------a section table experiment end-----------
 #for a smallest string level section, decomposite it into dict,xtract equations, figures and tables from a latex string
 def extract_latex_content(lat_string, cnt=('figure', 'table', 'equation')):
     """
-     :param lat_string:
+    :param lat_string:
     :param cnt: contents to extract, iterable
     :return: dict
     """
