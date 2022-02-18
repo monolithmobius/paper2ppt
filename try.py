@@ -248,14 +248,27 @@ def add_figure_frame(fig_str, frame_name, beamer_file):
         beamer_file.writelines(r'%' + '\n')
 
 #format table content into beamer ppt latex
-def add_table_frame(table_str, frame_name, beamer_file):
+def add_table_frame_adjustbox(table_str, frame_name, beamer_file):
 
 
 
     for table in table_str:
-        table_str = str(table)
         #add usepackage{adjustbox}
+        a_table = str(table).split('\n')
+        a_table.insert(1, '\\adjustbox{max height=\\textheight, max width=\\textwidth}{')
+        a_table.append('}')
+        a_table_str = '\n'.join(a_table)
         #add usepackage{adjustbox} end
+        beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
+        beamer_file.writelines(r'%' + '\n')
+        beamer_file.writelines(a_table_str + '\n')
+        beamer_file.writelines(r'\end{frame}' + '\n')
+        beamer_file.writelines(r'%' + '\n')
+
+def add_table_frame(table_str, frame_name, beamer_file):
+
+    for table in table_str:
+        table_str = str(table)
         beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
         beamer_file.writelines(r'%' + '\n')
         beamer_file.writelines(table_str + '\n')
