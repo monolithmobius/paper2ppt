@@ -371,7 +371,7 @@ print(a_table)
 a_table.insert(1,'\\adjustbox{max height=\\textheight, max width=\\textwidth}{')
 a_table.append('}')
 a_table_str = '\n'.join(a_table)
-print("------------------------------------------------------\n")
+print("---------------------------------------------------------\n")
 print(a_table_str)
 print("--------------------------------a section table experiment end-----------------------\n")
 
