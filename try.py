@@ -250,8 +250,12 @@ def add_figure_frame(fig_str, frame_name, beamer_file):
 #format table content into beamer ppt latex
 def add_table_frame(table_str, frame_name, beamer_file):
 
+
+
     for table in table_str:
         table_str = str(table)
+        #add usepackage{adjustbox}
+        #add usepackage{adjustbox} end
         beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
         beamer_file.writelines(r'%' + '\n')
         beamer_file.writelines(table_str + '\n')
@@ -362,7 +366,13 @@ with open('presentation_test.tex', 'w') as tex_f:
 print(sec_title_list)
 
 print("--------------------------------a section table experiment -----------------------\n")
-print(a_sec_tables)
+a_table = str(a_sec_tables[0]).split('\n')
+print(a_table)
+a_table.insert(1,'\\adjustbox{max height=\\textheight, max width=\\textwidth}{')
+a_table.append('}')
+a_table_str = '\n'.join(a_table)
+print("------------------------------------------------------\n")
+print(a_table_str)
 print("--------------------------------a section table experiment end-----------------------\n")
 
 
