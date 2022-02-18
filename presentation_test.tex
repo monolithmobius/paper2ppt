@@ -4,6 +4,7 @@
 \usepackage{lmodern}
 \usepackage{textcomp}
 \usepackage{lastpage}
+\usepackage{adjustbox}
 %
 \title{Towards Socially Responsible AI: Cognitive Bias-Aware Multi-Objective Learning
 }
@@ -16,13 +17,25 @@
 %
 \begin{itemize}
 \item
-abd
+§ INTRODUCTION
 \item
-def
+Throughout the course of history, human society has witnessed the `us vs. them' conflict,
 \item
-ghi
+where certain sections of the society have exhibited bias (in the form of hatred, prejudices, repression and even violence) towards other communities. This social discrimination has manifested itself in different forms, identified by a wide range of different characteristics, such as gender, ethnicity, religion and caste, among others. Some devastating consequences of social discrimination in history include reducing a woman to a mere legal possession of her husband in ancient Greece <cit.>, depriving admission to a deserving black student in a South-African university <cit.>, or preventing a boy of a Hindu priest family to marry a girl of a lower caste in an Indian village <cit.>, among many others. Scientific and technological revolution has played a pivotal role in mitigating social biases and prejudices to a large extent in modern human society. Yet the advent of data-driven AI poses a great threat to shift the equilibrium again because these data-driven AI-based predictions are prone to essentially pick up the cognitive biases and prejudices from content that was authored during the yester-years. To corroborate this point,
 \item
-jkl
+existing studies have shown that word embedding reflects the gender stereotypes present in large volumes of text <cit.>, e.g. men are more likely to be computer programmers while women are more likely to be home-makers. Developing AI systems that appear to be more human-like in the responses they generate <cit.> can lead to the risk of
+\item
+associating a human-like persona to AI systems,
+\item
+which in turn can lead to the disastrous consequence of a section of the society into (falsely) believing that the biased responses (such as the ones illustrated in Figure <ref>) are also human in nature. A possibility in feature-based models is to manually intervene and leave out the features that could lead to biased predictions for a task, e.g. the New York Police Department (NYPD) refrains from using the race of a person to predict the risks of future crimes <cit.>. However, understanding which features or their combinations could lead to ethically correct responses for a particular task is not always easy, unless such a bias resurfaces out from the data and is actually observed, e.g., it is difficult to see what features (term weighting functions) could implicitly lead to the observation about female actors in Figure <ref> (right), which is nothing short of `body shaming'. This situation is obviously aggravated for data-driven neural models, which rely on learning an abstract representation of the data, with an associated risk that this abstract representation is likely to be considerably different from how humans would `abstractify' the data themselves for the purpose of generating not just correct but ethically correct responses. Our Contributions. Existing debiasing studies typically involve one of the following broad classes of techniques. * Removing bias from embedded word representations <cit.>, subsequently employing debiased word embedding on downstream tasks <cit.>, or
+\item
+  * Removing bias from language models <cit.> or downstream tasks <cit.>, or
+\item
+  * Neutralizing bias in the training data itself <cit.>, or learning first on a neutral data and then fine-tuning on the biased data of a particular task <cit.>. Different from these existing studies on debiasing,
+\item
+which can be broadly classified into the ones that remove bias from either a) embedded words, or b) language models or c) training data itself,
+\item
+we propose a multi-task learning based approach to achieve a trade-off between the correctness and fairness of a model. Specifically, we propose a generic approach to first quantify and then reduce bias jointly against a number of secondary social identity attributes (e.g. gender and ethnicity) in a classification task involving a single primary attribute (e.g. predicting emotions, such as fear, anger etc. from a piece of text). Specifically, we employ a multi-objective learning approach, where the intention is to increase the social acceptability (fairness) of the predicted outputs without causing a significant degradation in the effectiveness of the primary classification task (correctness).
 \end{itemize}
 \end{frame}
 %
@@ -41,13 +54,23 @@ jkl
 %
 \begin{itemize}
 \item
-abd
+§ RELATED WORK
 \item
-def
+Demonstrating social bias in classification tasks. <cit.> demonstrated racial bias in four different tweet data sets used for hate and abusive language detection. They showed that a classifier trained on these tweets
 \item
-ghi
+exhibits a social bias in predicting that abusive tweets are
 \item
-jkl
+mostly written by African-Americans as compared to white Americans. On a similar note, <cit.> demonstrated racial bias in Twitter datasets for abusive language detection. They showed that when presented with the ethnicity information, the annotators were less likely to tag a tweet of an African American as abusive compared to the situation when annotators were not present with the racial bias information. <cit.> reports that a number of existing models for sentiment analysis suffer from either race or gender bias. <cit.> used a constrained learning approach to debias classification models on feature vectors. In contrast, we employ a multi-objective function and do not use hand-crafted features for our experiments. Social identity features for improving predictions. <cit.> showed that the use of demographic features, such as age, and gender can improve the text classification task performance across five languages. On a similar note, <cit.> found that including the gender information of the speakers (authors) help to translate sentences more effectively
+\item
+to a target language with gender-specific morphology. <cit.> proposed an evaluation methodology to measure gender bias in machine translation (MT) systems and also released a dataset to support further investigation in MT bias. <cit.> released a gender tagged dataset for POS-tagging and dependency parsing and showed that POS-tagging and dependency parsing effectiveness can vary across genders. Mitigating bias from word embedding and down-stream tasks. <cit.> proposed ways to debias word embedding with an objective to reduce bias in downstream tasks. <cit.> debiased pre-trained embedded word vectors
+\item
+obtain gender-neutral word vectors, e.g. in such an embedded space `babysit' is expected to be equidistant from grandmother and grandfather. Given an existing word embedding, their approach involves
+\item
+defining a gender specific subspace and then
+\item
+learning a linear transformation which seeks to preserve pairwise inner products between the word vectors while minimizing the projection of the gender neutral words onto the gender subspace. <cit.> proposed another approach to obtain debiased  word embedding by preserving the gender information with additional dimensions, the presence of non-zero components along which indicates gender inclined words. <cit.> concludes that existing word embedding debiasing techniques (e.g. <cit.>)
+\item
+are rather superficial in nature, in the sense that applying such debiased embeddings can still lead to gender bias in down-stream tasks. <cit.> proposed a multi-class debiasing solution for word embedding. They removed race, gender and racial bias from existing word vectors. <cit.> measured social bias in sentence encoders. <cit.> proposed debiasing approaches for contextualized word embeddings by using data augmentation and neutralization. <cit.> proposed a gender debiasing method for language generation by introducing an additional term in the loss function for language generation, seeking to make the probability more uniform across both genders. <cit.> reviews existing gender-bias detection techniques for NLP and the advantages and disadvantages of the debiasing approaches. <cit.> proposed bias detection and debiasing methods for sentence paraphrasing. <cit.> proposed an author verification method that also illustrates the sources of bias in the corresponding corpus. They also showed that elimination of bias sources can lead to a more balanced dataset.
 \end{itemize}
 \end{frame}
 %
@@ -55,13 +78,35 @@ jkl
 %
 \begin{itemize}
 \item
-abd
+§ BIAS-AWARE PREDICTIONS
 \item
-def
+Primary classification task. Before explaining our proposed framework for
 \item
-ghi
+multi-objective debiasing, we formalize the problem definition with the following notations. Let
 \item
-jkl
+be a set of d-dimensional real-valued vectors, each with a categorical variable, y=y(x⃗), 
+\item
+which are the labels of a primary task with possible values in a range of k+1 different categories. As a concrete example, each x⃗ could represent an embedded vector representation of a sentence, whereas
+\item
+the y(x⃗) values could correspond to k=2 categories of emotion, namely `anxiety' and `joy' associated with a given sentence, mapped to integers {0,1,2} (0: none). Generally speaking, the primary task is then to learn a model for predicting a category, , given an input vector, x⃗, i.e.,
+\item
+where Δ represents a k-simplex of class probabilities of primary task categories. (Social) Identity attributes. A model, such as the one represented in Equation <ref> can lead to socially unacceptable responses. To make ethically correct predictions, it is necessary to remove such cognitive biases. To quantify bias formally, we define a set of categorical attributes, akin to social identity, against which a specific subset of predicted output categories may exhibit socially unacceptable biases. There are two important points to take notice of. First, the set of categorical attributes corresponding to social identities, henceforth referred to as identity attributes, is not a part of the input data. This is because explicitly using such features for training a model, ϕ (Equation <ref>), may be socially unacceptable in the first place, e.g., NYPD avoids using the race of a person with criminal records to predict the risk of his/her future crimes <cit.>. Second, only a specific combination of the identity attributes with a subset of the primary output categories may be deemed as socially unacceptable, (the complementary combinations being less likely to be controversial). As a concrete example, frequently predicting the emotion of `fear' with the identity attribute `female' is disturbing in today's society (rightly so), whereas its complement, i.e. frequent associations of `fear' with `man' is not (possibly attributed to the desire to change a long history of patriarchal society). Formulating cognitive bias. Next, we introduce a set of secondary response variables y^B to define the association between a subset, say P_s={0,…,k_s}⊂ P,
+\item
+of primary categories (k_s < k) and a set of n identity attributes, say {z_i}_i=1^n, where each z_i ∈{0,…,m_i}, i.e. is a categorical variable with m_i+1 possible values, each mapped to an integer in [0,m_i] (e.g. the `Gender' attribute with `male' mapped to 0 and `female' to 1). For the purpose of defining bias, we now assume that this set of categories C_i={0,…,m_i} corresponding to the identity attribute z_i, is comprised of two mutually disjoint subsets, i.e. C_i=U_i ∪ D_i, where U_i denotes the set of historically under-represented categories with respect to the set P_s. The following concrete example is used to clarify the idea (using words rather than integers for readability). For an identity attribute `gender',
+\item
+C_gender={male, female}, if the primary task is to predict emotion from one of P={fear,anger}, then an example of cognitive bias results by defining
+\item
+P_s={fear} and U_gender={female} (women are prone to be more afraid than men). Bias response variables. We then define a bias response as a Boolean variable denoting a frequent association between a subset of primary categories, P_s, and a particular identity attribute z_i as a function of the likelihood of the association. More formally,
+\item
+where τ∈[0,1] is a parameter (set to 1/2 in all our experiments). Equation <ref> sets the Boolean variable y^B_i=0 if a) y(x⃗) ∈ P-P_s, i.e., y(x⃗) is a category which is neutral to a given set of identity attributes, or b) if the co-occurrence of the primary task labels (P_s) into a set of specific categories, likely to be associated with social biases, is sufficiently high (determined by a parameter τ∈[0,1]). With respect to the schematic shown in Figure <ref>, two sets of bias variables
+\item
+are defined for the two identity attributes, namely gender and race (shown towards the right), using the co-occurrences of specific values of these attribute (e.g. female and black) with prediction categories `fear' and `anger' respectively. Pseudo-task of biased response generation. Using the bias response variables of Equation <ref>, the next step is then to learn a function mapping from input vectors, their associated primary task labels along with the corresponding indicator pseudo-variables for bias detection (as per Equation <ref>), (x⃗, y, y^B_i), to
+\item
+a Bernoulli probability distribution indicating the probability of presence (or absence) of social bias corresponding to the i-th identity attribute. More formally,
+\item
+Equation <ref> corresponds to learning the associations between the inputs, primary task labels and an identity attribute; two such relations, one for gender, and the other for ethnicity, are shown with the two vertical dotted arrows in Figure <ref>. Although the indicator variables denote the presence of bias, in our learning step we effectively invert the variables so as to intentionally perform poorly for the task of generating biased responses, which eventually leads to decreasing the bias from the primary prediction task. Multi-Objective Neural Architecture. Next, we learn the
+\item
+primary classification task (Equation <ref>) simultaneously along with the n different bias tasks, i.e. one for each identity attribute (Equation <ref>). This joint learning can specifically be realized with a neural architecture, schematically depicted in Figure <ref>. Concretely speaking, we first employ a linear transformation, Θ_s ∈ℝ^d× p to transform each data vector to a shared abstract representation, and then apply a set of subsequent linear transformations specific to the primary and the bias tasks, respectively. We then maximize the following joint likelihood function to learn the shared layer and the task specific parameters. where the respective probabilities are estimated from Equation <ref>. Specifically, for our experiments, we use square loss to back-propagate errors and compute gradients. An important observation in Equation <ref> is the negative sign in the likelihood of the bias tasks, which indicates that the overall objective is to perform well in the primary task and perform poorly in each bias pseudo-task seeking to reduce the non-uniformity in the posterior distribution of the respective categories of identity attributes with respect to a subset of primary task categories. Intuitively speaking, the joint objective seeks to sacrifice a little on the correctness of predictions to be more ethically correct.
 \end{itemize}
 \end{frame}
 %
@@ -163,13 +208,39 @@ y^B_i(\vec{x}) =
 %
 \begin{itemize}
 \item
-abd
+§ EVALUATION
 \item
-def
+Before describing the main experiments, we start this section with an illustrative example on a two dimensional synthetic dataset, where we visualize the working principle of bias removal our proposed model. We used this synthetic dataset to investigate if the proposed model can be effective on a relatively simple setup, which would then provide evidence that it could also be potentially effective on real data as well. §.§ Visualization with Synthetic 2D Data
 \item
-ghi
+Figure <ref> plots a set of 2000 samples, x⃗=(x_1,x_2), generated from a two dimensional iso-tropic Gaussians mixture model (GMM) of two components (plotted as red and green, respectively) with equal priors; the centres located at μ_1^T=(2,1) (red) and μ_2^T=(2,4) (green). To illustrate the idea of bias in predictions, we assume that the set P_s (the set of categories likely to be attached as social stereotypes as per the notations of Table <ref>) in this example corresponds to the category `green', i.e. P_s={2}. As an identity attribute, we consider the x_2 variable; the set C_x_2 comprised of points
 \item
-jkl
+and its complement set D_x_2. Figure <ref> (right) compares this bias-aware decision model with that of a bias-agnostic one (logistic regression with L_2 regularization) as shown on the left of the figure. It can be visualized that the bias-agnostic model is more effective in its decision as evident from a smaller number of erroneous points crossing the decision boundary (shown as the solid line). Yet such a bias-agnostic model, despite being mostly correct, leads to a visible cognitive bias of believing that every point in the upper half of the plot area is green (as per the definitions of sets P_s and U_x_2). Such biases could lead to detrimental effects (e.g., substitute
+\item
+`upper-half' with `females' and `green' with `afraid'). On the other hand, the bias-aware model is able to make an adjustment in the decision boundary (comprising piece-wise linear segments) by tilting it away from the dotted horizontal line (defining boundary of U_x_2). The bias-aware model includes a number of green points below its decision boundary, which as per the earlier example is analogous to assuming that the model in this case predicts that a number of females do not show the negative emotion of fear. §.§ Real Dataset
+\item
+To demonstrate the potential problems of cognitive biases in prediction systems, for our experiments, we specifically select the task of emotion prediction. Concretely speaking, given a natural language sentence, the task involves predicting the primary emotion of expressed in the sentence from among 5 possible emotion classes, namely `fear', `anger', `joy', and `sadness' (along with the neutral class). The dataset that we use in particular for our experiments is the Equity Evaluation Corpus (EEC), compiled by the work in <cit.>. In addition to being associated with an emotion, each sentence in this dataset expresses a gender or race. Social identities (gender and race) in <cit.> were represented through the use of a set of typical person names (e.g., Ebony is typically a female African American name, whereas Adam is typically a male Caucasian one). The dataset contains an equal proportion of sentences in each different combination of the identity attributes. The sentences were generated by substituting person names and gender specific pronouns from a number of templates expressing different emotions. A summary of the dataset is presented in Table <ref>. <cit.> report that even balanced datasets can lead to emotion predictions that are reminiscent of historically prejudiced opinions and cognitive biases, such as: i) women are more prone to be afraid than men, b) African Americans are more prone to be angry etc. The prediction of bias-agnostic models in such cases are affected by the presence of implicit bias in the embedded word vectors <cit.>. In addition to experimenting with the balanced dataset, we also prepare a more realistic version of the dataset by 
+\item
+aligning the emotion distributions to match a set of social stereotypes. The objective of creating these explicitly biased datasets was to investigate if our proposed model can reduce biases that are explicitly present as class priors in the data. One version of such an explicitly biased subsampled data represents the stereotype that males are more prone to anger, whereas women more prone to be afraid (see the middle part of Table <ref>). Our experiments also revealed that the predictions of bias-agnostic models on the balanced dataset turned out to be biased towards predicting Caucasians as more likely to be afraid (possibly due to effects of word embedding on large volumes of text regarding Islamophobia). The other subsample that we use for the experiments further aggravates this effect (as can be seen from the bottom part of Table <ref>). Baselines. We now describe the details of the different baseline approaches employed in our experiments. * (Bias-Agnostic Learning): This method employs a degenerate version of the multi-objective learning of Equation <ref>, where the only variable used to learn the parameters of the model corresponds to the primary-task labels (y's which in our experiments denote the emotion categories). No bias response variables are used to train model parameters. As word representations, we used pre-trained vectors obtained by applying skip-gram <cit.> on Google-News corpus. * (Bias-Agnostic Learning with L_2 regularization): Identical to , with the only difference that L2 regularization is used to train the model parameters. The objective was to investigate if the sparsity constraint of L_2 regularization (which prevents overfitting) can also help reduce cognitive biases. * (Bias-Agnostic Learning with additional Gender Feature): Since the baselines and do not
+\item
+use any information from the identity attributes (i.e., gender and race), in this approach we concatenate the gender attribute value (male or female) to each input vector. The objective was to investigate if including social identity specific information can reduce the cognitive biases in the prediction outputs. * (Bias-Agnostic Learning with additional Race Feature): In this approach instead of appending the gender feature, we concatenate the race feature to every input. Again, this We used single objective function with race as an additional feature for learning the primary task here. * (Bias-Agnostic Learning with Debiased Word Embedding): Different from the previous approaches, where we used standard word embedding (which is likely to reflect the cognitive biases in the data), in this baseline, we employ the `neutralize and equalize' debiasing method proposed in <cit.> to obtain gender-neutral word vectors, e.g. in such an embedded space `babysit' is expected to be equidistant from grandmother and grandfather. The purpose of employing a set of gender neutral word vectors is to reduce the gender stereotypes learned from large volumes of text in the input to a bias-agnostic model and see if neutralized inputs can lead to fairer down-stream predictions. Specifically, we used gender neutralized word embedding obtained by applying transformation on the same set of embedded word vectors that we use for the above baselines (i.e. Google News corpus). Variants of bias-aware approaches. To compare against the baselines, we train emotion prediction based on our proposed bias-aware multi-objective approach in three different ways, as enumerated below. * (Bias-aware Multi-objective Learning with Gender only): In this approach, we learn the prediction model from the multi-objective function of Equation <ref> using only the bias variables corresponding to the gender attribute (i.e. n=1 in Equation <ref>). * (Bias-aware Multi-objective Learning with Race only): This variant uses a similar approach as above, the difference being this time we use the associations between the ethnicity and the emotion categories to define the biased response generation variables, y^B's. * (Bias-aware Multi-objective Joint Learning): In this variant, we use both the ethnicity-emotion and the gender-emotion pairs to define two sets of biased response generation variables,
+\item
+y^B_1's and y^B_2's with n=2. Method             3cFear vs. Gender       3cFear vs. Race     3cAnger vs. Fairness (lack of bias) is measured by associating two emotions classes (fear and anger)
+\item
+with gender (male/female) and race (black/white). Results show that the bias-aware models output more socially acceptable responses, specifically, a) not every woman is fearful, b) not all Caucasians are phobic, and c) not all men are angry, as evident respectively from the fairness (F) values of `Fear vs. Gender', `Fear vs. Race', and `Anger vs. Gender'. Parameters and Settings. As seen in Figure <ref>, the common parameters to all the methods (baselines and proposed) are dimensionality (d) of the inputs and that of the shared layer (p < d). We set d=300 for all our experiments. All approaches, except , use 300 dimensional pre-trained skipgram vectors trained on Google News corpus. The vector representation of each sentence is the
+\item
+sum of embedded representations of constituent words of the sentence. The inputs in constitute the set of gender-neutralized word vectors <cit.>. We tuned the dimension of the shared layer in a range of 10 to 250 in steps of 10, and report the results only with the optimal value of p=200. In all our experiments, we used a train-test split of 80:20. Some emotion-attribute pairs such as `joy vs. gender' exhibit an almost uniform posterior, or in other words, the emotion in these cases are not highly correlated with the identity attribute, e.g. the classifier in this case
+\item
+does not predict that males are happier than females. Consequently, we do not employ debiasing on these emotion-attribute pairs. Evaluation Metrics. To address the trade-off between correct and fair prediction responses, we employ two separate metrics for each. Correctness (which we denote as A) is measured with the help of accuracy with respect to all categorical values of predicted primary task labels, i.e. how many times each input is correctly classified to its ground-truth label. Fairness is computed as a function of the posterior distribution of a particular category of primary task (e.g. fear for emotion prediction) with respect to a number of identity attribute values, e.g. (male and female for gender). In particular, for a primary task label y=l (0≤ l ≤ k_s) and a binary identity attribute C={U,D} (following the notations of Table <ref>), we compute the product of the posteriors as
+\item
+which is maximum if α=1/2, i.e. when the distribution is uniform. The value of F can thus be used as a fairness measure (higher the better). Note that this argument continues to apply for more than 2 categories. Since it is desirable to simultaneously obtain a high accuracy and fairness, we combine these two values by taking their harmonic mean to report an overall measure (analogous to measuring F-score from precision and recall). Formally,
+\item
+where A is the accuracy with respect to all primary task labels, whereas F involves a fairness measure involving one such category. §.§ Results
+\item
+Table <ref> reports the results of our experiments. First, we observe that on two versions of subsampled datasets (as mentioned in Table <ref>), namely SS-1 (where there is a higher prior of women being associated to fear and men with anger) and SS-2 (with a high prior of whites with fear),
+\item
+performs very poorly in terms of the fairness measure (and hence also poorly on the combined metric γ). Importantly, the results on the subsampled data typically reflects on the fact that predictions under the presence of cognitive biases in data can lead to non-humane responses such as all women are afraid (as can be observed from the value α_female=1). The purpose of reporting the results with the sub-sampled (biased) datasets is to demonstrate that the bias in the data is likely to propagate to the predictions. It is also demonstrated that balanced datasets (the case with no sub-sampling denoted as `None') can somewhat mitigate this bias from the predictions as evident from the increase in γ with reference to the SS-1 and SS-2 cases. The use of sub-sampling provides a reference point to compare the effect of adding more annotated data instances to reduce the class imbalance from data (note that in our experiments, the whole dataset is balanced). The disadvantage of adding more data towards balancing the class priors with respect to the identity attributes is that it not only is a manually extensive process requiring retraining the model, but also poses difficulties in foreseeing its effect on the posterior biases. The observation reported under the `None' column in Table <ref> with a γ of 0.1384 (third row) illustrates the important fact that even a balanced dataset can lead to biased predictions and this shows that there is further scope for alleviating bias, which is what we explore in the rest of the table. It can be seen that the use of gender debiased pre-trained word embedding, i.e. does not perform well in terms of reducing gender biases from predictions, our observations in fact corroborates to that of <cit.>. The reason this happens is due to the fact that a linear transformation based word embedding debiasing is unable to explicitly take into account the posterior distributions of sensitive combinations of emotion-identity types. Similarly, it also turns out that making use of the gender and ethnicity features as parts of the input data cannot take into account the posterior distributions. Importantly, we note that the proposed bias-aware methods are
+\item
+able to reduce three particular cognitive biases, i.e. bias of associating the emotion of fear to women, that of associating anger to men, and that of associating fear to Caucasians, as can be seen by comparing the γ values of the bias-aware methods with the bias-agnostic ones. The advantage of the joint method over its individual counterparts, i.e. and is that it reduces the overall γ value aggregated across these different biases. From a practical view-point this implies a single predictive model can achieve a trade-off between a given set of specified cognitive biases instead of training separate predictive models to reduce each. Another important observation is that the overall accuracy values also turn out to be the best among the competing approaches. This happens because the use of pre-trained word embeddings (both gender agnostic and gender equalized) introduce potential sources of gender and race specific biases as parts of the input. Since the ground-truth emotion labels are distributed uniformly across different gender and race categories (see Table <ref>), these biases from large volumes of text contribute to decreasing the effectiveness of the bias-agnostic classifiers. However, with bias-aware training it is possible to make more accurate predictions.
 \end{itemize}
 \end{frame}
 %
@@ -251,13 +322,9 @@ F=\alpha(1-\alpha),\, \alpha=P(y=l|U),
 %
 \begin{itemize}
 \item
-abd
+§ CONCLUSIONS AND FUTURE WORK
 \item
-def
-\item
-ghi
-\item
-jkl
+In this paper, we propose a multi-objective learning based framework that seeks to effectively learn to predict a primary task (e.g. emotion classification), with an aim to ensure that such predictions do not constitute social prejudices and stereotypes. predicting that most black-skinned people are prone to be criminals. In future, we would like to explore ways of learning to reduce bias without the explicit annotation of social identity specific categorical attributes as parts of the data. The effectiveness of such an approach could then be evaluated by measuring how well the predictions correlate with unprejudiced human judgments. Acknowledgement. The first author is supported by Science Foundation Ireland (Grant No. 13/RC/2106). aaai
 \end{itemize}
 \end{frame}
 %
