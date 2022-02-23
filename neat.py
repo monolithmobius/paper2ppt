@@ -367,26 +367,3 @@ print("--------------------------------a section table experiment end-----------
 
 
 
-#for a smallest string level section, decomposite it into dict,xtract equations, figures and tables from a latex string
-def extract_latex_content(lat_string, cnt=('figure', 'table', 'equation')):
-    """
-    :param lat_string:
-    :param cnt: contents to extract, iterable
-    :return: dict
-    """
-    res = {}
-    # convert to TexSoup
-    lat_repr = TexSoup(lat_string)
-    for cnt_type in cnt:
-        items = lat_repr.find_all(cnt_type)
-        # remove found items, so only pure text remains
-        for item in items:
-            lat_repr.remove(item)
-        res[cnt_type] = items
-    # also save the pure text
-    res['text'] = str(lat_repr)
-    return res
-
-
-
-

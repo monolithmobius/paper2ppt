@@ -9,15 +9,10 @@ from TexSoup import TexSoup
 import re
 #convert latex formate text to pure text which has no command and structures.
 from pylatexenc.latex2text import LatexNodes2Text
-# text summarization with nltk
-import nltk
-import random
-from sklearn.feature_extraction.text import TfidfVectorizer
-import string
-import warnings
-from nltk.corpus import stopwords
-#generate ppt pdf from latex
-from pdflatex import PDFLaTeX
+#text summarization with bert-extractive-transformer
+from summarizer import Summarizer
+import torch
+
 
 # extract paper latex from zip
 zip = "Bias_Final.zip"
@@ -155,74 +150,6 @@ def latex2text(lat_string):
     """
     return LatexNodes2Text().latex_to_text(lat_string)
 
-
-# ai text summarization with nltk
-nltk.download('stopwords')
-
-HANDICAP = 0.5
-
-def remove_punctuation_marks(text):
-    punctuation_marks = dict((ord(punctuation_mark), None) for punctuation_mark in string.punctuation)
-    return text.translate(punctuation_marks)
-
-
-def get_lemmatized_tokens(text):
-    normalized_tokens = nltk.word_tokenize(remove_punctuation_marks(text.lower()))
-    return [nltk.stem.WordNetLemmatizer().lemmatize(normalized_token) for normalized_token in normalized_tokens]
-
-
-def get_average(values):
-    greater_than_zero_count = total = 0
-    for value in values:
-        if value != 0:
-            greater_than_zero_count += 1
-            total += value
-    return total / greater_than_zero_count
-
-
-def get_threshold(tfidf_results):
-    i = total = 0
-    while i < (tfidf_results.shape[0]):
-        total += get_average(tfidf_results[i, :].toarray()[0])
-        i += 1
-    return total / tfidf_results.shape[0]
-
-
-def get_summary(documents, tfidf_results):
-    summary = ""
-    i = 0
-    while i < (tfidf_results.shape[0]):
-        if (get_average(tfidf_results[i, :].toarray()[0])) >= get_threshold(tfidf_results) * HANDICAP:
-            summary += ' ' + documents[i]
-        i += 1
-    return summary
-
-
-warnings.filterwarnings("ignore")
-
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    print('punkt')
-    nltk.download('punkt')
-
-try:
-    nltk.data.find('corpora/wordnet')
-except LookupError:
-    nltk.download('wordnet')
-
-text = open('AAAI-SenP.1698.tex', 'r').read()
-documents = nltk.sent_tokenize(text)
-
-tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
-                                stop_words=stopwords.words('english')).fit_transform(documents)
-
-#whole paper summary
-print("\n--------------------------summary of all---------------------------------------------------\n")
-#print(get_summary(documents, tfidf_results))
-print("\n--------------------------summary end---------------------------------------------------------\n")
-##### ai text summarization with nltk end #####
-
 #format text content into beamer ppt latex
 def add_text_frame(text_list, frame_name, beamer_file):
 
@@ -249,9 +176,6 @@ def add_figure_frame(fig_str, frame_name, beamer_file):
 
 #format table content into beamer ppt latex
 def add_table_frame_adjustbox(table_str, frame_name, beamer_file):
-
-
-
     for table in table_str:
         #add usepackage{adjustbox}
         a_table = str(table).split('\n')
@@ -286,6 +210,7 @@ def add_equation_frame(equation_str, frame_name, beamer_file):
         beamer_file.writelines(r'%' + '\n')
 
 
+
 #for a smallest string level section, extract text content latex
 def extract_text_content(lat_string, cnt=('figure', 'table', 'equation')):
     """
@@ -296,6 +221,10 @@ def extract_text_content(lat_string, cnt=('figure', 'table', 'equation')):
     res = {}
     # convert to TexSoup
     lat_repr = TexSoup(lat_string)
+
+    print("\n--------------------------see lat_repr---------------------------------------------------\n")
+    #print(lat_repr)
+    print("\n--------------------------see lat_repr---------------------------------------------------\n")
     for cnt_type in cnt:
         items = lat_repr.find_all(cnt_type)
         # remove found items, so only pure text remains
@@ -303,8 +232,13 @@ def extract_text_content(lat_string, cnt=('figure', 'table', 'equation')):
             lat_repr.remove(item)
         res[cnt_type] = items
     # also save the pure text
+    print("\n--------------------------see res[text]---------------------------------------------------\n")
     res['text'] = str(lat_repr)
+ #   res['text'] = res['text'][1:]
+    print(res['text'])
+    print("\n--------------------------see res[text] end---------------------------------------------------\n")
     return res['text']
+
 
 
 #transfer the whole paper latex into ppt beamber latex
@@ -332,21 +266,23 @@ with open('presentation_test.tex', 'w') as tex_f:
         print(section_sample)
         print(
             "\n--------------------------see a section end---------------------------------------------------------\n")
-        print("\n--------------------------summarize a section--------------------------------------------\n")
         sec_text = extract_text_content(section_sample, cnt=('figure', 'table', 'equation'))
         sec_text=latex2text(sec_text)
-        documents = nltk.sent_tokenize(sec_text)
-        tfidf_results = TfidfVectorizer(tokenizer=get_lemmatized_tokens,
-                                        stop_words=stopwords.words('english')).fit_transform(documents)
-        section_summary = get_summary(documents, tfidf_results).split('\n')
-        better_section_summary = []
-        print(section_summary)
-        for i in section_summary:
+        print("\n--------------------------see sec_text--------------------------------------------\n")
+        print(sec_text)
+        print("\n--------------------------see sec_text end--------------------------------------------\n")
+        # use the package Bert-extractive-summarizer
+        # this is still extractive, the resulting sentences are still a bit long
+        bert_sum = Summarizer()
+        sum_res = bert_sum(sec_text, num_sentences=5)
+        sum_res = sum_res.splitlines()
+        better_sum_res = []
+        for i in sum_res[1:]:
             if i != '' and i !=' ' and i != '  ' and i!='   ' and i!='    ' and i!='     ' and i!='      ':
-                better_section_summary.append(i)
-        for i in better_section_summary:
-            print(i)
-        print(better_section_summary)
+                better_sum_res.append(i)
+        print("\n--------------------------summarize a section----------------------------------------\n")
+        print(sum_res)
+        print(better_sum_res)
         print("\n--------------------------summarize a section end----------------------------------------\n")
         soup_section = TexSoup(section_sample)
         #print(soup_section)
@@ -369,9 +305,9 @@ with open('presentation_test.tex', 'w') as tex_f:
         print("--------------------------------retrieve section equations end-----------------------\n")
 
         #one section composition
-        add_text_frame(better_section_summary, a_sec_title, tex_f)
+        add_text_frame(better_sum_res, a_sec_title, tex_f)
         add_figure_frame(a_sec_figures, a_sec_title, tex_f)
-        add_table_frame(a_sec_tables,a_sec_title,tex_f)
+        add_table_frame_adjustbox(a_sec_tables,a_sec_title,tex_f)
         add_equation_frame(a_sec_equations, a_sec_title, tex_f)
 
     tex_f.writelines(r'\end{document}' + '\n')
@@ -380,35 +316,15 @@ print(sec_title_list)
 
 print("--------------------------------a section table experiment -----------------------\n")
 a_table = str(a_sec_tables[0]).split('\n')
-print(a_table)
+#print(a_table)
 a_table.insert(1,'\\adjustbox{max height=\\textheight, max width=\\textwidth}{')
 a_table.append('}')
 a_table_str = '\n'.join(a_table)
 print("---------------------------------------------------------\n")
-print(a_table_str)
+#print(a_table_str)
 print("--------------------------------a section table experiment end-----------------------\n")
 
 
-
-#for a smallest string level section, decomposite it into dict,xtract equations, figures and tables from a latex string
-def extract_latex_content(lat_string, cnt=('figure', 'table', 'equation')):
-    """
-    :param lat_string:
-    :param cnt: contents to extract, iterable
-    :return: dict
-    """
-    res = {}
-    # convert to TexSoup
-    lat_repr = TexSoup(lat_string)
-    for cnt_type in cnt:
-        items = lat_repr.find_all(cnt_type)
-        # remove found items, so only pure text remains
-        for item in items:
-            lat_repr.remove(item)
-        res[cnt_type] = items
-    # also save the pure text
-    res['text'] = str(lat_repr)
-    return res
 
 
 
