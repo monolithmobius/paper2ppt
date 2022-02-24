@@ -142,6 +142,19 @@ for i in sec_list:
 
 print("\n--------------------------slice paper section end-------------------------------------------\n")
 
+print("\n--------------------------put paper sections into dictionary data structure -------------------------------------------\n")
+sec_dict = {}
+#print(len(sec_title_list), len(sec_list))
+for i in range(len(sec_title_list)):
+    sec_dict[sec_title_list[i]] = sec_list[i]
+print(sec_dict)
+'''
+for k, v in zip(sec_title_list, sec_list):
+    sec_dict[k] = v
+print(sec_dict)
+'''
+print("\n--------------------------put paper sections into dictionary data structure end-------------------------------------------\n")
+
 # removing formatting commands in a latex string, thus converting it into a pure text
 def latex2text(lat_string):
     """
@@ -239,89 +252,91 @@ def extract_text_content(lat_string, cnt=('figure', 'table', 'equation')):
     print("\n--------------------------see res[text] end---------------------------------------------------\n")
     return res['text']
 
+def section_level_paper2ppt_auto_generate(list_of_section, title_of_slide):
+    # transfer the whole paper latex into ppt beamber latex
+    with open('presentation_test.tex', 'w') as tex_f:
+        # headers and packages
+        tex_f.writelines(r'\documentclass{beamer}' + '\n')
+        tex_f.writelines(r'\usepackage[T1]{fontenc}' + '\n')
+        tex_f.writelines(r'\usepackage[utf8]{inputenc}' + '\n')
+        tex_f.writelines(r'\usepackage{lmodern}' + '\n')
+        tex_f.writelines(r'\usepackage{textcomp}' + '\n')
+        tex_f.writelines(r'\usepackage{lastpage}' + '\n')
+        tex_f.writelines(r'\usepackage{adjustbox}' + '\n')
+        tex_f.writelines(r'%' + '\n')
+        tex_f.writelines(r'\title{}'.format('{' + title_of_slide + '}') + '\n')
+        tex_f.writelines(r'%' + '\n')
+        tex_f.writelines(r'\begin{document}' + '\n')
+        tex_f.writelines(r'\normalsize' + '\n')
+        tex_f.writelines(r'\maketitle' + '\n')
+        tex_f.writelines(r'%' + '\n')
 
+        # section by section
+        for section_sample in list_of_section:
+            # one section decomposition
+            print("\n--------------------------see a section---------------------------------------------------\n")
+            print(section_sample)
+            print(
+                "\n--------------------------see a section end---------------------------------------------------------\n")
+            sec_text = extract_text_content(section_sample, cnt=('figure', 'table', 'equation'))
+            sec_text = latex2text(sec_text)
+            print("\n--------------------------see sec_text--------------------------------------------\n")
+            print(sec_text)
+            print("\n--------------------------see sec_text end--------------------------------------------\n")
+            # use the package Bert-extractive-summarizer
+            # this is still extractive, the resulting sentences are still a bit long
+            bert_sum = Summarizer()
+            sum_res = bert_sum(sec_text, num_sentences=5)
+            sum_res = sum_res.splitlines()
+            better_sum_res = []
+            for i in sum_res:
+                if i != '' and i != ' ' and i != '  ' and i != '   ' and i != '    ' and i != '     ' and i != '      ':
+                    better_sum_res.append(i)
+            better_sum_res = better_sum_res[1:]
+            print("\n--------------------------summarize a section----------------------------------------\n")
+            print(sum_res)
+            print(better_sum_res)
+            print("\n--------------------------summarize a section end----------------------------------------\n")
+            soup_section = TexSoup(section_sample)
+            # print(soup_section)
+            print("--------------------------------retrieve section title-----------------------\n")
+            a_sec_title = soup_section.section.string
+            print(a_sec_title)
+            print("--------------------------------retrieve section title end-----------------------\n")
+            print("--------------------------------retrieve section figures-----------------------\n")
+            a_sec_figures = soup_section.find_all('figure')
+            print(a_sec_figures)
+            print("--------------------------------retrieve section figures end-----------------------\n")
+            print("--------------------------------retrieve section tables-----------------------\n")
+            a_sec_tables = soup_section.find_all('table')
+            print(a_sec_tables)
+            print("--------------------------------retrieve section tables end-----------------------\n")
 
-#transfer the whole paper latex into ppt beamber latex
-with open('presentation_test.tex', 'w') as tex_f:
-    # headers and packages
-    tex_f.writelines(r'\documentclass{beamer}' + '\n')
-    tex_f.writelines(r'\usepackage[T1]{fontenc}' + '\n')
-    tex_f.writelines(r'\usepackage[utf8]{inputenc}' + '\n')
-    tex_f.writelines(r'\usepackage{lmodern}' + '\n')
-    tex_f.writelines(r'\usepackage{textcomp}' + '\n')
-    tex_f.writelines(r'\usepackage{lastpage}' + '\n')
-    tex_f.writelines(r'\usepackage{adjustbox}' + '\n')
-    tex_f.writelines(r'%' + '\n')
-    tex_f.writelines(r'\title{}'.format('{' + slide_title + '}') + '\n')
-    tex_f.writelines(r'%' + '\n')
-    tex_f.writelines(r'\begin{document}' + '\n')
-    tex_f.writelines(r'\normalsize' + '\n')
-    tex_f.writelines(r'\maketitle' + '\n')
-    tex_f.writelines(r'%' + '\n')
+            print("--------------------------------retrieve section equations-----------------------\n")
+            a_sec_equations = soup_section.find_all('equation')
+            print(a_sec_equations)
+            print("--------------------------------retrieve section equations end-----------------------\n")
 
-    #section by section
-    for section_sample in sec_list:
-        # one section decomposition
-        print("\n--------------------------see a section---------------------------------------------------\n")
-        print(section_sample)
-        print(
-            "\n--------------------------see a section end---------------------------------------------------------\n")
-        sec_text = extract_text_content(section_sample, cnt=('figure', 'table', 'equation'))
-        sec_text=latex2text(sec_text)
-        print("\n--------------------------see sec_text--------------------------------------------\n")
-        print(sec_text)
-        print("\n--------------------------see sec_text end--------------------------------------------\n")
-        # use the package Bert-extractive-summarizer
-        # this is still extractive, the resulting sentences are still a bit long
-        bert_sum = Summarizer()
-        sum_res = bert_sum(sec_text, num_sentences=5)
-        sum_res = sum_res.splitlines()
-        better_sum_res = []
-        for i in sum_res:
-            if i != '' and i !=' ' and i != '  ' and i!='   ' and i!='    ' and i!='     ' and i!='      ':
-                better_sum_res.append(i)
-        better_sum_res = better_sum_res[1:]
-        print("\n--------------------------summarize a section----------------------------------------\n")
-        print(sum_res)
-        print(better_sum_res)
-        print("\n--------------------------summarize a section end----------------------------------------\n")
-        soup_section = TexSoup(section_sample)
-        #print(soup_section)
-        print("--------------------------------retrieve section title-----------------------\n")
-        a_sec_title = soup_section.section.string
-        print(a_sec_title)
-        print("--------------------------------retrieve section title end-----------------------\n")
-        print("--------------------------------retrieve section figures-----------------------\n")
-        a_sec_figures = soup_section.find_all('figure')
-        print(a_sec_figures)
-        print("--------------------------------retrieve section figures end-----------------------\n")
-        print("--------------------------------retrieve section tables-----------------------\n")
-        a_sec_tables = soup_section.find_all('table')
-        print(a_sec_tables)
-        print("--------------------------------retrieve section tables end-----------------------\n")
+            # one section composition
+            add_text_frame(better_sum_res, a_sec_title, tex_f)
+            add_figure_frame(a_sec_figures, a_sec_title, tex_f)
+            add_table_frame(a_sec_tables, a_sec_title, tex_f)
+            add_equation_frame(a_sec_equations, a_sec_title, tex_f)
 
-        print("--------------------------------retrieve section equations-----------------------\n")
-        a_sec_equations = soup_section.find_all('equation')
-        print(a_sec_equations)
-        print("--------------------------------retrieve section equations end-----------------------\n")
+        tex_f.writelines(r'\end{document}' + '\n')
+section_level_paper2ppt_auto_generate(sec_list, slide_title)
 
-        #one section composition
-        add_text_frame(better_sum_res, a_sec_title, tex_f)
-        add_figure_frame(a_sec_figures, a_sec_title, tex_f)
-        add_table_frame(a_sec_tables,a_sec_title,tex_f)
-        add_equation_frame(a_sec_equations, a_sec_title, tex_f)
-
-    tex_f.writelines(r'\end{document}' + '\n')
 
 print(sec_title_list)
 
+#this is a faild experiment
 print("--------------------------------a section table experiment -----------------------\n")
-a_table = str(a_sec_tables[0]).split('\n')
+#a_table = str(a_sec_tables[0]).split('\n')
 #print(a_table)
-a_table.insert(1,'\\adjustbox{max height=\\textheight, max width=\\textwidth}{')
-a_table.append('}')
-a_table_str = '\n'.join(a_table)
-print("---------------------------------------------------------\n")
+#a_table.insert(1,'\\adjustbox{max height=\\textheight, max width=\\textwidth}{')
+#a_table.append('}')
+#a_table_str = '\n'.join(a_table)
+#print("---------------------------------------------------------\n")
 #print(a_table_str)
 print("--------------------------------a section table experiment end-----------------------\n")
 
