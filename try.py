@@ -174,7 +174,7 @@ def add_figure_frame(fig_str, frame_name, beamer_file):
         beamer_file.writelines(r'\end{frame}' + '\n')
         beamer_file.writelines(r'%' + '\n')
 
-#format table content into beamer ppt latex
+#this is a faild function
 def add_table_frame_adjustbox(table_str, frame_name, beamer_file):
     for table in table_str:
         #add usepackage{adjustbox}
@@ -277,9 +277,10 @@ with open('presentation_test.tex', 'w') as tex_f:
         sum_res = bert_sum(sec_text, num_sentences=5)
         sum_res = sum_res.splitlines()
         better_sum_res = []
-        for i in sum_res[1:]:
+        for i in sum_res:
             if i != '' and i !=' ' and i != '  ' and i!='   ' and i!='    ' and i!='     ' and i!='      ':
                 better_sum_res.append(i)
+        better_sum_res = better_sum_res[1:]
         print("\n--------------------------summarize a section----------------------------------------\n")
         print(sum_res)
         print(better_sum_res)
@@ -307,7 +308,7 @@ with open('presentation_test.tex', 'w') as tex_f:
         #one section composition
         add_text_frame(better_sum_res, a_sec_title, tex_f)
         add_figure_frame(a_sec_figures, a_sec_title, tex_f)
-        add_table_frame_adjustbox(a_sec_tables,a_sec_title,tex_f)
+        add_table_frame(a_sec_tables,a_sec_title,tex_f)
         add_equation_frame(a_sec_equations, a_sec_title, tex_f)
 
     tex_f.writelines(r'\end{document}' + '\n')
