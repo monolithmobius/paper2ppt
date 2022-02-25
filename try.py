@@ -101,7 +101,7 @@ sections_tex_list = soup.find_all('section')
 print("\n----------------------------retrieve section latex-----------------------\n")
 print(sections_tex_list)
 print("\n----------------------------retrieve section latex end-----------------------\n")
-
+f.close()
 
 # slice text section
 print("\n----------------------slice paper section-----------------------------------------------\n")
@@ -148,6 +148,8 @@ sec_dict = {}
 for i in range(len(sec_title_list)):
     sec_dict[sec_title_list[i]] = sec_list[i]
 print(sec_dict)
+for i in sec_dict.items():
+    print(i)
 '''
 for k, v in zip(sec_title_list, sec_list):
     sec_dict[k] = v
