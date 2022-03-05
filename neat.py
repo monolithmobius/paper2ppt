@@ -1,5 +1,4 @@
-################################################################
-#################succeed version###################
+##################################################version needs to gather tex##########################################
 
 #input file path
 import os
@@ -17,19 +16,19 @@ from pylatexenc.latex2text import LatexNodes2Text
 from summarizer import Summarizer
 import torch
 
-
-
 # extract paper latex from zip
 zip = "Bias_Final.zip"
 z = zipfile.ZipFile(zip, "r")
 z.extractall()
 z.close()
 
-tx = tx_process = 'AAAI-SenP.1698.tex'
+tx = tx_process = input('input main latex filename(xxx.tex):')
 
 # remove latex comment %
 f = open(tx, 'r')
 a = f.readlines()
+f.close()
+
 f = open(tx, 'w')
 for i in a:
     if i.startswith('%'):
@@ -38,6 +37,7 @@ for i in a:
         f.write(i)
 f.close()
 
+#read file as one string
 def read_file(path):
 
     with open(path) as f:
@@ -45,6 +45,41 @@ def read_file(path):
 
     return cntnt
 
+#gather tex
+print("\n----------------------find input xxx.tex str in main latex file-----------------------------------------------\n")
+def gather_tex(main_latex_file):
+    lat = read_file(main_latex_file)
+    soup_main = TexSoup(lat)
+    input_tex_list=soup_main.find_all('input')
+    input_filename_list = []
+    for e in input_tex_list:
+        input_filename_list.append(e.string)
+    print('\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+    print(input_filename_list)
+    print('\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+    gather = False
+    for e_str in input_filename_list:
+        if e_str[-4:] == '.tex':
+            gather = True
+    if gather == False:
+        return lat
+    input_file_str_list = []
+    for e_str in input_filename_list:
+        input_tex_str = read_file(e_str)
+        input_file_str_list.append(input_tex_str)
+    n = len(input_filename_list)
+    for i in range(n):
+        lat=lat.replace('\input{'+input_filename_list[i]+'}',input_file_str_list[i])
+    print('\ngggggggggggggggggggggggggggggggggggggggggggggggggggg\n',lat,'\nggggggggggggggggggggggggggggggggggggggggggggggggggg\n',lat.__class__)
+    return lat
+lat_gathered=gather_tex(tx)
+better_f = "gathered_main.tex"
+with open(better_f, 'w', encoding='utf-8') as fh:
+    # write preamble
+    fh.writelines(lat_gathered)
+tx=tx_process=better_f
+print("\n----------------------find input xxx.tex str in main latex file end-----------------------------------------------\n")
+########################################################DONR:tex gathered in a string###########################################################################################
 def remove_latex_comment(lat_file):
     """
     remove all the comments in a latex file or latex string
@@ -244,6 +279,7 @@ print(sec_dict)
 for i in sec_dict.items():
     print(i)
 print("\n--------------------------put paper sections into dictionary data structure end-------------------------------------------\n")
+
 ###############################################DONE:slice paper into /section pieces and put the tiltle,content of each section into a dictionary###############################################
 
 #slice each /section piece into smaller pieces
@@ -382,8 +418,9 @@ def extract_latex_content(lat_string, cnt=('figure', 'table', 'equation')):
             items = lat_repr.find_all(cnt_name)
             # remove found items, so only pure text remains
             # I also want to remove the line, so separating natural paragraphs is easier
+            print('\n11111111111111111111111111111111111111111111111111111111111111111111\n',items,items.__class__,'\n11111111111111111111111111111111111111111111111111\n')
             for item in items:
-                print('\n5555555555555555555555555555555555555555555555555\n', item, item.__class__,'\n5555555555555555555555555555555555555555555555555555555555555555\n')
+                print('\n5555555555555555555555555555555555555555555555555\n',item,item.__class__,'\n5555555555555555555555555555555555555555555555555555555555555555\n')
                 lat_repr.replace(item, TEXSOUP_CNT_PREFIX + cnt_type + '_' + str(count))
                 count += 1
             all_items.extend(items)
@@ -413,7 +450,7 @@ def separate_natural_paragraph(lax_dict):
         elif line.startswith(TEXSOUP_CNT_PREFIX + 'equation'):
             # problem: replace hard coding
             # record the equation is in which paragraph
-            # I can safely ignore figures and tables in this case
+            #I can safely ignore figures and tables in this case
             eqs_map.append((int(line[line.rfind('_') + 1:]), para_count))
         else:
             # here I want to replace the \n at the end of the line with a space
@@ -452,12 +489,15 @@ def summarize_all_secs(lat_secs_dict, summarizer=bert_textsummary, params={}):
     """
     result = dict()
     for sec_name, sec_cnt in lat_secs_dict.items():
+        print('\n33333333333333333333333333333333333333333333333333\n',sec_name,sec_cnt.__class__,'\n33333333333333333333333333333333333333333\n')
         if sec_name in ('titles', 'article_title'):
             result[sec_name] = sec_cnt
         elif sec_cnt.__class__ == dict:
             # recursion
+            print('\n444444444444444444444444444444444444444\n',sec_name,sec_cnt.__class__,'\n44444444444444444444444444444444444444444444444444444\n')
             result[sec_name] = summarize_all_secs(sec_cnt, summarizer, params)
         elif sec_cnt.__class__ == str:
+            print('\n2222222222222222222222222222222222\n',sec_name, sec_cnt.__class__,'\n2222222222222222222222222222222222222222222222222222222222222222222\n')
             sec_cnt_ext = extract_latex_content(sec_cnt)
             sec_cnt_ext['text'], sec_cnt_ext['eqs_pos'] = separate_natural_paragraph(sec_cnt_ext)
             sec_cnt_ext['text_sum'] = summarizer(sec_cnt_ext, **{})
@@ -512,6 +552,30 @@ def add_figure_frame(fig_str, frame_name, beamer_file):
     beamer_file.writelines(r'%' + '\n')
 
 
+#adjust the size of table
+tabular_pat_start = re.compile(r'begin[*\s]*\{\s*tabular[xy*\s]*\}', re.I)
+tabular_pat_end = re.compile(r'end[*\s]*\{\s*tabular[xy*\s]*\}', re.I)
+def _auto_adjust_table(table_str, tab_start=tabular_pat_start, tab_end=tabular_pat_end):
+    """
+    use latex adjust box to automatically adjust the width/height of a table
+    :param table_str: string representation of the table
+    :param tab_start: regex to identify the start of the tabular element
+    :param tab_end: regex to identify the end of the tabular element
+    :return: latex str
+    """
+    table_str = str(table_str)
+    adj_insert = ['begin{adjustbox}{width=.6\\\\textwidth}\n',
+                  'end{adjustbox}']
+    # start of the tabular
+    tb_tab = re.findall(tab_start, table_str)[0]
+    rep_str = adj_insert[0] + '\\\\' + tb_tab
+    table_str = re.sub(tb_tab, rep_str, table_str)
+    # end of the tabular
+    tb_tab = re.findall(tab_end, table_str)[0]
+    rep_str = tb_tab + '\n\\\\' + adj_insert[1]
+    table_str = re.sub(tb_tab, rep_str, table_str)
+    return table_str
+
 def add_table_frame(table_str, frame_name, beamer_file):
     """
     add a frame containing a table into a beamer file
@@ -520,16 +584,16 @@ def add_table_frame(table_str, frame_name, beamer_file):
     :param beamer_file: file handle
     :return:
     """
-    # PROBLEM: tables are very hard to put in a slide. need to think of a good way
-    # PROBLEM: type checking for table_str
-    # PROBLEM: use adjustbox package
+    # problem: tables are very hard to put in a slide. need to think of a good way
+    # problem: type checking for table_str
+    # problem: use adjustbox package
     table_str = str(table_str)
+    table_str = _auto_adjust_table(table_str)
     beamer_file.writelines(r'\begin{}'.format('{frame}' + '{' + frame_name + '}') + '\n')
     beamer_file.writelines(r'%' + '\n')
     beamer_file.writelines(table_str + '\n')
     beamer_file.writelines(r'\end{frame}' + '\n')
     beamer_file.writelines(r'%' + '\n')
-
 
 def write_beamer_section(sec_dict, sec_name, f_handle):
     """
@@ -587,6 +651,23 @@ def write_beamer_section(sec_dict, sec_name, f_handle):
             for tb in sec_dict['table']:
                 add_table_frame(tb, sec_name, f_handle)
 
+def get_head(path):
+    s = ''
+    #USEPACKAGE_PATT = re.compile(r'\\usepackage', re.I)
+    NEWCOMMAND_PATT = re.compile(r'\\newcommand', re.I)
+    RENEWCOMMAND_PATT = re.compile(r'\\renewcommand', re.I)
+    DECLAREMATHOERATOR_PATT = re.compile(r'\\DeclareMathOperator', re.I)
+    with open(path) as f:
+        cntnt = f.readlines()
+    for line in cntnt:
+        #head_ukg = re.search(USEPACKAGE_PATT, line)
+        head_ncm = re.search(NEWCOMMAND_PATT, line)
+        head_rncm = re.search(RENEWCOMMAND_PATT, line)
+        head_dmo = re.search(DECLAREMATHOERATOR_PATT, line)
+        if head_ncm or head_rncm or head_dmo:
+            s += line
+    return s
+
 def generate_beamer(summarized_dict, fname):
     """
     generate beamer and pdf slides from summarized result
@@ -604,6 +685,21 @@ def generate_beamer(summarized_dict, fname):
         fh.writelines(r'\usepackage{lmodern}' + '\n')
         fh.writelines(r'\usepackage{textcomp}' + '\n')
         fh.writelines(r'\usepackage{lastpage}' + '\n')
+        fh.writelines(r'\usepackage{adjustbox}' + '\n')
+        fh.writelines(r'\usepackage{amsfonts}' + '\n')
+        fh.writelines(r'\usepackage{xcolor}' + '\n')
+        fh.writelines(r'\usepackage{graphicx}' + '\n')
+        fh.writelines(r'\usepackage{tabularx}' + '\n')
+        fh.writelines(r'\usepackage{url}' + '\n')
+        fh.writelines(r'\usepackage{multirow}' + '\n')
+        fh.writelines(r'\usepackage{booktabs}' + '\n')
+        fh.writelines(r'\usepackage{amsmath}' + '\n')
+        fh.writelines(r'\usepackage{comment}' + '\n')
+        fh.writelines(r'\usetheme{Copenhagen}' + '\n')
+        fh.writelines(r'\usepackage[caption=false]{subfig}' + '\n')
+
+        head = get_head(tx)
+        fh.writelines(head)
         fh.writelines(r'%' + '\n')
 
         # write title frame
@@ -626,4 +722,4 @@ def generate_beamer(summarized_dict, fname):
 
 ppt_beamer_file = 'ppt.tex'
 generate_beamer(decomposed_paper_dict, ppt_beamer_file)
-###################################################################DONE:paper ppt writed##########################################################################################################
+###################################################################DONE:paper ppt writed##############################################################################################
