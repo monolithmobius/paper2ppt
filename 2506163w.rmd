@@ -1,0 +1,699 @@
+# Timelog
+
+* LATEX ACADEMIC PAPER TO LATEX PRESENTATION AUTO-GENERATOR
+* YINZHEN WU
+* 2506163w
+* Dr.Ganguly Debasis
+
+## Week 1
+
+ 6/10/2021 [1 hour] Looking for project introduction file, don’t find it. 
+
+ 7/10/2021 [6 hours] read some node-react, meet supervisor. 
+
+ 8/10/20201 [1 hour] order some machine learning, natural language processing, deep learning, tensorflow, pytorch, python book online. 
+
+ 9/10/2021 [3 hours]read paper ‘D2S: Document-to-Slide Generation Via Query-Based Text Summarization’ 
+
+ 10/10/2021 [2 hours] read paper ‘D2S: Document-to-Slide Generation Via Query-Based Text Summarization’ 
+
+ 11/10/2021 [3 hours] read paper ‘D2S: Document-to-Slide Generation Via Query-Based Text Summarization’ 
+
+ 12/10/2021 [3 hours] read paper ‘D2S: Document-to-Slide Generation Via Query-Based Text Summarization’ 
+## Week 2
+ 13/10/2021 [3 hours] read paper ‘D2S: Document-to-Slide Generation Via Query-Based Text Summarization’ 
+
+ 14/10/2021 [1 hour] meet supervisor, think about the meeting notes. 
+
+ 15/10/2021 [2 hours] think about plan and search for relevant information . 
+
+ 16/10/2021 [2 hours] Research different kinds of AI. 
+
+ 17/10/2021 [2 hours] Research about AI tools and Technology. 
+
+ 18/10/2021 [2 hours] Think about core steps of transferring papers to AI. 
+
+ 19/10/2021 [2 hours] Observe the target input and output, make Solution analysis 1: Input- Calculation-Output 
+## Week 3
+ 20/10/2021 [2 hours] make Solution analysis 2:pipeline design 
+
+ 21/10/2021 [3 hours] make Solution analysis 3:core, make Core 1 Resolution Plan,  meet supervisor. 
+
+ 22/10/2021 [1 hour] meet supervisor. 
+
+ 23/10/2021 [1 hour] Looking for the method of extracting zip file with terminal command and how to commit several terminal command automatically. 
+
+ 24/10/2021 [1 hour] Looking for the method of extracting zip file with terminal command and how to commit several terminal command automatically. 
+
+ 25/10/2021 [2 hours] Choose pycharm and python to do the project instead of linux script, install pycharm and search for how to unzip. 
+
+ 26/10/2021 [2 hours] learn some python 
+## Week 4
+ 27/10/2021 [2 hours] learn some python 
+
+ 28/10/2021 [2 hours] learn some python 
+
+ 29/10/2021 [2 hours] learn some python 
+
+ 30/10/2021 [1 hour] aim at unzip zip 
+
+ 31/10/2021 [1 hour] aim at unzip zip 
+
+ 1/11/2021  [2 hours] unzip successfully, aim at retrieve paper title from latex file with Lib/re.py 
+## Week 5
+ 2/11/2021  [1 hour]  aim at retrieve paper title from latex file with Lib/re.py 
+
+3/11/2021  [1 hour]  aim at retrieve paper title from latex file with Lib/re.py 
+
+4/11/2021  [1 hour]  aim at retrieve paper title from latex file with Lib/re.py 
+
+5/11/2021  [5 hours] successfully washed latex comment ‘%’ and retrieved paper title from latex file with Lib/re.py. 
+
+6/11/2021   [2 hours] installed python-pptx package  
+
+7/11/2021  [2 hours] successfully generated a slide page of paper title with python-pptx package. 
+
+8/11/2021 [1 hour]aim at make the input general for any paper.zip. 
+## Week 6
+9/11/2021 [1 hour]aim at modify input, make functions structural, use latex parser instead of re, generate beamer latex output instead of using pptx python package. 
+
+10/11/2021 [1 hour]aim at modify input, make functions structural, use latex parser instead of re, generate beamer latex output instead of using pptx python package. 
+
+11/11/2021 [1 hour]meet supervisor.   
+
+12/11/2021 [1 hour]aim at modify input, make functions structural, use latex parser instead of re, generate beamer latex output instead of using pptx python package. 
+
+13/11/2021 [1 hour]aim at modify input, make functions structural, use latex parser instead of re, generate beamer latex output instead of using pptx python package. 
+
+14/11/2021 [1 hour]aim at modify input, make functions structural, use latex parser instead of re, generate beamer latex output instead of using pptx python package. 
+
+15/11/2021 [1 hour]aim at modify input, make functions structural, use latex parser instead of re, generate beamer latex output instead of using pptx python package. 
+## Week 7
+16/11/2021 [1 hour]aim at modify input, make functions structural, use latex parser instead of re, generate beamer latex output instead of using pptx python package. 
+
+17/11/2021 [1 hour]aim at modify input, make functions structural, use latex parser instead of re, generate beamer latex output instead of using pptx python package. 
+
+18/11/2021[9 hour] 
+
+Meet supervisor. Install and use the python latex parser TexSoup python Module to retreive paper title and generate latex beamer file which can be compiled. 
+
+19/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+20/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+21/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+22/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+## Week 8
+23/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+24/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+25/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+26/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+27/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+28/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+29/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+## Week 9
+30/11/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+1/12/2021[1 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+2/12/2021[10 hour] 
+
+Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+3/12/2021[10 hour] 
+
+Meet supervisor. Aim at retrieve images in paper use the python latex parser TexSoup python module and generate slide beamer file with paper title and images. 
+
+4/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+5/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+6/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+## Week 10
+7/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+8/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+9/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+10/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+11/12/2021[10 hour] 
+
+Meet supervisor. Try to add image into slide beamer file. 
+
+12/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+13/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+## Week 11
+14/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+15/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+16/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+17/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+18/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+19/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+## Week 12
+20/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+21/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+22/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+23/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+24/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+25/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+## Week 13
+26/12/2021[1 hour] 
+
+Try to add image into slide beamer file. 
+
+27/12/2021[1 hour] 
+
+Create a github repository. 
+
+28/12/2021[3 hour] 
+
+Succeed to add all image into slide beamer file. 
+
+19/12/2021[3 hour] 
+
+Aim at adding formula into the slide beamer file.  
+
+20/12/2021[0 hour] 
+
+Holiday 
+
+21/12/2021[0 hour] 
+
+Holiday 
+
+22/12/2021[0 hour] 
+
+Holiday 
+## Week 14
+
+23/12/2021[0 hour] 
+
+Holiday 
+
+24/12/2021[0 hour] 
+
+Holiday 
+
+25/12/2021[0 hour] 
+
+Holiday 
+
+26/12/2021[0 hour] 
+
+Holiday 
+
+27/12/2021[0 hour] 
+
+Holiday 
+
+28/12/2021[0 hour] 
+
+Holiday 
+
+29/12/2021[0 hour] 
+
+Holiday 
+## Week 15
+
+30/12/2021[0 hour] 
+
+Holiday 
+
+31/12/2021[0 hour] 
+
+Holiday 
+
+01/01/2022[0 hour] 
+
+Holiday 
+
+02/01/2022[0 hour] 
+
+Holiday 
+
+03/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+04/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+05/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+06/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+## Week 16
+
+07/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+08/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+09/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+10/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+11/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+12/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+13/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+## Week 17
+
+14/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+15/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+16/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+17/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+18/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+19/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+20/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+## Week 18
+
+21/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+22/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+23/01/2022[1 hour] 
+
+Writing status report and submit it. 
+
+24/01/2022[3 hour] 
+
+Writing status report and submit it. 
+
+25/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+26/01/2022[1 hour] 
+
+Aim at adding formula into the slide beamer file. 
+
+26/01/2022[16 hour] 
+
+Aim at adding tables, formulas, section title, subsection title into the slide beamer file. 
+
+27/01/2022[5 hour] 
+
+Aim at adding tables, formulas, section title, subsection title into the slide beamer file. 
+## Week 19
+
+28/01/2022[5 hour] 
+
+Search for natural language processing packages to do text content summarization, meet with supervisor, get to know I need to abandon pylatex package and rewrite the codes to retrieve title, figure, table, formulas, section title, subsection title. Be clear that next week I need to use NLTK and Scikit-learn to do the first step of paper text content summarization. 
+
+29/01/2022[5 hour] 
+
+Try to understand the NLTK+Scikit-learn medium article example which implements text summarization. 
+
+30/01/2022[5 hour] 
+
+Try to understand the NLTK+Scikit-learn medium article example which implements text summarization. 
+
+31/01/2022[5 hour] 
+
+Try to understand the NLTK+Scikit-learn medium article example which implements text summarization. 
+
+01/02/2022[5 hour] 
+
+Try to add exampled NLTK+Scitkit-learn component into the project. 
+
+02/02/2022[10 hour] 
+
+Make a new design of the project coding procedure and implement more about component retrieval. 
+
+03/02/2022[5 hour] 
+
+Aim at slide paper latex by section. 
+## Week 20
+
+04/02/2022[5 hour] 
+
+Aim at slide paper latex by section. 
+
+05/02/2022[5 hour] 
+
+Slide paper latex by section, decompose each section to retrieve figure, table, equation, and other useful data type from each section, do summarization for each section text, put all of these in collective way section by section. 
+
+06/02/2022[5 hour] 
+
+Slide paper latex by section, decompose each section to retrieve figure, table, equation, and other useful data type from each section, do summarization for each section text, put all of these in collective way section by section. 
+
+07/02/2022[5 hour] 
+
+Slide paper latex by section, decompose each section to retrieve figure, table, equation, and other useful data type from each section, do summarization for each section text, put all of these in collective way section by section. 
+
+08/02/2022[5 hour] 
+
+Slide paper latex by section, decompose each section to retrieve figure, table, equation, and other useful data type from each section, do summarization for each section text, put all of these in collective way section by section. 
+
+09/02/2022[5 hour] 
+
+Slice paper latex into the smallest section or subsection or subsubsection...or paragraph; different type data retrieval of each section (smallest size); clean the text content irrelevant symbols before making the text summarization to make the result more reasonable; use nlp tools to summarize text ; format retrieved data of each section into beamer slide page paper latex which can be compiled to be slide successfully ;  
+
+10/02/2022[10 hour] 
+
+Slice paper latex into the smallest section or subsection or subsubsection...or paragraph; different type data retrieval of each section (smallest size); clean the text content irrelevant symbols before making the text summarization to make the result more reasonable; use nlp tools to summarize text ; format retrieved data of each section into beamer slide page paper latex which can be compiled to be slide successfully ;  
+
+## Week 21
+11/02/2022[10 hour] 
+
+The first time of getting the complete project pipeline done. 
+
+12/02/2022[0 hour] 
+
+In the hospital for a surgery. 
+
+13/02/2022[5 hour] 
+
+Aim at 1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation  
+
+14/02/2022[1 hour] 
+
+Aim at 1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+15/02/2022[1 hour] 
+
+Aim at 1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+16/02/2022[1 hour] 
+
+Aim at 1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+17/02/2022[5 hour] 
+
+Aim at adding dictionaries with recursion to slide articles into smaller sections. 
+## Week 22
+
+18/02/2022[5 hour] 
+
+Aim at slice the paper latex into section-subsection-subsubsection...-paragraph structure and extract content-format content into ppt latex.  
+
+19/02/2022[5 hour] 
+
+Aim at slice the paper latex into section-subsection-subsubsection...-paragraph structure and extract content-format content into ppt latex. 
+
+20/02/2022[5 hour] 
+
+Aim at slice the paper latex into section-subsection-subsubsection...-paragraph structure and extract content-format content into ppt latex. 
+
+21/02/2022[5 hour] 
+
+Aim at slice the paper latex into section-subsection-subsubsection...-paragraph structure and extract content-format content into ppt latex. 
+
+22/02/2022[5 hour] 
+
+Aim at slice the paper latex into section-subsection-subsubsection...-paragraph structure and extract content-format content into ppt latex. 
+
+23/02/2022[5 hour] 
+
+Aim at slice the paper latex into section-subsection-subsubsection...-paragraph structure and extract content-format content into ppt latex. 
+
+24/02/2022[5 hour] 
+
+Aim at slice the paper latex into section-subsection-subsubsection...-paragraph structure and extract content-format content into ppt latex. 
+
+## Week 23
+
+25/02/2022[10 hour] 
+
+Aim at slice the paper latex into section-subsection-subsubsection...-paragraph structure and extract content-format content into ppt latex. 
+
+26/02/2022[15 hour] 
+
+1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+27/02/2022[15 hour] 
+
+1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+28/02/2022[15 hour] 
+
+1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+01/03/2022[15 hour] 
+
+1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+02/03/2022[15 hour] 
+
+1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+03/03/2022[15 hour] 
+
+1.adding recursion mechanism, 2.adding dictionary data structure, 3.adding re python package,4.adding usepackage/command as header, 5.adding pylatexenc.latex2text,LatexNodes2Text 6.adding \usepackage{adjustbox}. 7.writing dissertation 
+
+## Week 24
+
+04/03/2022[1 hour] 
+
+1.adding function to generate ppt for paper latex which are multiple or single 2.adding function to optimize the display quality of the content. 3. writing dissertation 
+
+05/03/2022[1 hour] 
+
+1.adding function to generate ppt for paper latex which are multiple or single 2.adding function to optimize the display quality of the content. 3. writing dissertation 
+
+06/03/2022[1 hour] 
+
+1.adding function to generate ppt for paper latex which are multiple or single 2.adding function to optimize the display quality of the content. 3. writing dissertation 
+
+07/03/2022[2 hour] 
+
+1.adding function to generate ppt for paper latex which are multiple or single 2.adding function to optimize the display quality of the content. 3. writing dissertation 4. meet supervisor 
+
+08/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3.evaluation design and conduct. 4.writing dissertation. 
+
+09/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3.evaluation design and conduct. 4.writing dissertation. 
+
+10/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3.evaluation design and conduct. 4.writing dissertation. 
+
+## Week 25
+
+11/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3. evaluation design and conduct. 4.writing dissertation. 
+
+12/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3. evaluation design and conduct. 4.writing dissertation. 
+
+13/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3. evaluation design and conduct. 4.writing dissertation. 
+
+14/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3. evaluation design and conduct. 4.writing dissertation. 
+
+15/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3. evaluation design and conduct. 4.writing dissertation. 
+
+16/03/2022[2 hour] 
+
+1.adding latex usepackages for preamble. 2.optimize display quality.3. evaluation design and conduct. 4.writing dissertation. 
+
+17/03/2022[2 hour] 
+
+1. evaluation design and conduct. 2.writing dissertation. 
+
+## Week 26
+
+18/03/2022[2 hour] 
+
+1. evaluation conduct. 2.writing dissertation. 
+
+19/03/2022[2 hour] 
+
+1. evaluation conduct. 2.writing dissertation. 
+
+20/03/2022[2 hour] 
+
+1. evaluation conduct. 2.writing dissertation. 
+
+21/03/2022[2 hour] 
+
+1. evaluation conduct. 2.writing dissertation. 
+
+22/03/2022[2 hour] 
+
+1. evaluation conduct. 2.writing dissertation. 
+
+23/03/2022[2 hour] 
+
+1. evaluation conduct. 2.writing dissertation. 
+
+24/03/2022[5 hour] 
+
+1.writing dissertation. 
+
+## Week 27
+
+25/03/2022[5 hour] 
+
+1.writing dissertation. 
+
+26/03/2022[5 hour] 
+
+1.writing dissertation. 
+
+27/03/2022[5 hour] 
+
+1.writing dissertation. 
+
+28/03/2022[5 hour] 
+
+1.writing dissertation. 
+
+29/03/2022[5 hour] 
+
+1.writing dissertation. 
+
+30/03/2022[5 hour] 
+
+1.writing dissertation. 
+
+31/03/2022[5 hour] 
+
+1.writing dissertation. 
+
+## Week 28
+
+01/04/2022[15 hour] 
+
+1.writing dissertation. 2.record video 3.refine readme 4.add manual 5.submit dissertation 
