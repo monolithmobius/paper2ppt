@@ -17,7 +17,7 @@ from summarizer import Summarizer
 import torch
 
 # extract paper latex from zip
-zip = "Bias_Final.zip"
+zip = input('input paper latex zip filename(xxx.zip):')
 z = zipfile.ZipFile(zip, "r")
 z.extractall()
 z.close()
@@ -633,6 +633,8 @@ def write_beamer_section(sec_dict, sec_name, f_handle):
                     final_text.append(txt_f.copy())
                     # reset txt_f to empty, so starting the next frame
                     txt_f = []
+                #to next para
+                current_para += 1
         else:
             final_text = [sec_dict['text_sum']]
 

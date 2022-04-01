@@ -1,0 +1,479 @@
+% REMEMBER: You must not plagiarise anything in your report. Be extremely careful.
+
+\documentclass{l4proj}
+\documentclass[letterpaper]{article}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage[toc,page]{appendix}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{calligra}
+\usepackage{comment}
+\usepackage{bm}
+\usepackage[neverdecrease]{paralist}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{graphics}
+\usepackage{tabularx}
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{mdwlist}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage{calc}
+\usepackage[neverdecrease]{paralist}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[round]{natbib}
+
+\usepackage{booktabs}
+\usepackage{diagbox}
+\usepackage{colortbl}
+\usepackage{subcaption}
+\usepackage{makecell}
+\usepackage{soul}
+\usepackage{amsfonts}
+
+%
+% put any additional packages here
+%
+
+\begin{document}
+
+%==============================================================================
+%% METADATA
+\title{LaTex academic paper to LaTex presentation auto-generator}
+\author{Yinzhen Wu}
+\date{March 25, 2022}
+\maketitle
+
+%==============================================================================
+%% ABSTRACT
+\begin{abstract}
+    \vskip 0.5em
+    Making presentations for academic papers is a frequent work for people who are involved in science and education industry. This task is done by hand normally and takes some time. For improving efficiency and reducing time consumption, this project aims at making an automatic presentation writer for academic papers.
+    \vskip 0.5em
+    This project is a Python software. The input is a Zip file containing LaTex academic paper. The output is a laTex PPT file which can be compiled into a presentation PDF. This project applies knowledge of LaTex, Python, Natural language processing to achieve the goal.
+    \vskip 0.5em
+    As the result, the project successfully generates readable presentations for academic papers. According to the evaluation result, most of the participants who comment on this software think this software can save time for the presentation writing task. They think the output LaTex PPT file can be used to do post-editing in order to get a final version of the presentation for formal usages.But, on the other hand, their are still improvements of this software needing to be made in order to output better presentations.
+\end{abstract}
+
+\section*{Acknowledgement}
+I would like to thank my project supervisor, Dr.Ganguly Debasis, for his support and guidance during the project.
+%==============================================================================
+
+% EDUCATION REUSE CONSENT FORM
+% If you consent to your project being shown to future students for educational purposes
+% then insert your name and the date below to  sign the education use form that appears in the front of the document.
+% You must explicitly give consent if you wish to do so.
+% If you sign, your project may be included in the Hall of Fame if it scores particularly highly.
+%
+% Please note that you are under no obligation to sign
+% this declaration, but doing so would help future students.
+%
+\def\consentname {Yinzhen Wu} % your full name
+\def\consentdate {25 March 2022} % the date you agree
+%
+\educationalconsent
+
+
+%==============================================================================
+\tableofcontents
+
+%==============================================================================
+%% Notes on formatting
+%==============================================================================
+% The first page, abstract and table of contents are numbered using Roman numerals and are not
+% included in the page count.
+%
+% From now on pages are numbered
+% using Arabic numerals. Therefore, immediately after the first call to \chapter we need the call
+% \pagenumbering{arabic} and this should be called once only in the document.
+%
+% The first Chapter should then be on page 1. You are allowed 40 pages for a 40 credit project and 20 pages for a
+% 20 credit report. This includes everything numbered in Arabic numerals (excluding front matter) up
+% to but excluding the appendices and bibliography.
+%
+% You must not alter text size (it is currently 10pt) or alter margins or spacing.
+%
+%
+%==================================================================================================================================
+%
+% IMPORTANT
+% The chapter headings here are **suggestions**. You don't have to follow this model if
+% it doesn't fit your project. Every project should have an introduction and conclusion,
+% however.
+%
+%==================================================================================================================================
+\chapter{Introduction}
+
+% reset page numbering. Don't remove this!
+\pagenumbering{arabic}
+
+\section{Motivation and objectives}
+     Producing a presentation for academic paper is a frequent work in educational and scientific field. The presentation of an academic paper can be used in research conference, university lecture, dissertation show and even industrial meeting, etc.
+     \vskip 0.5em
+     Making such a presentation from scratch requires several steps and certain skills. The writer needs to retrieve essential content of each section, summarize key points of ideas , outline the structure and make design. It takes time and energy to read the research paper comprehensively, find out and select important content, make copy and paste for images, equations and tables. Making an auto artificial intelligence writer to complete above works can save time and energy for people when they need presentations of academic papers.
+     \vskip 0.5em
+     LaTex is a high-quality typesetting system which is used frequently. While writing academic papers and presentations, layout is a frequent task. Making an auto generator for LaTex file can help large amount of latex users to simplify their PPT writing task. What's more, it is also a good basis for developing this project further cause there are existing technologies to transfer PDF into LaTex. So, it reminds a possibility to develop this project to be the product with more general usages.
+     \vskip 0.5em
+     The objective of this project is to make an auto generator for people to attain the basic version of presentation for a academic paper in several seconds. It aims at providing a good foundation for people to do post-editing manually basing on the generated presentation file and get a final version for various formal usages in real life situations.
+\section{Summary}
+\begin{itemize}
+      \item
+    \textbf{Chapter 1} states motivation, objectives of the work, as well as the structure of chapters in this dissertation.
+      \item
+    \textbf{Chapter 2} introduces background of this project. In this chapter,relevant laTex syntax, text summarization technology and existing works on automatic presentation generation are introduced.
+      \item
+    \textbf{Chapter 3} outlines the software requirement, including functional requirements and non-functional requirements.
+      \item
+    \textbf{Chapter 4} describes the generator design.The pipeline design and software structure of this product.
+      \item
+    \textbf{Chapter 5} describes the implementation of the automatic presentation generator, as well as the software testing of this project.
+      \item
+    \textbf{Chapter 6} evaluates the generator output quality with evaluation participants, and discuss about if the aims of the work were met.
+      \item
+    \textbf{Chapter 7} discuss about to what extent the aim of this project is met, the missing and insufficient function of this software , and outlines potential future work.
+\end{itemize}
+
+%==================================================================================================================================
+\chapter{Background}
+For constructing a natural language processing LaTex PPT writer for Academic papers, existing technologies relevant to LaTex, Python programming, text summarization and similar works for this topic can be good reference and applicable tools. Key tools and inspiring works are introduces in this chapter.
+\section{Existing Technologies}
+\subsection{LaTex}
+\begin{itemize}
+   \item
+    LaTeX is a typesetting system that uses TeX as its formatting engine. It is used to help users without professional typesetting knowledge to write book-like quality documents in a short period of time.LaTex was originally a writing tool for mathematicians and computer scientists. It was developed basing on Tex's macros. Functionally speaking, Tex handles the processing of the layout, and LaTex handles the processing of the document content.It provides authors with predefined commands for formatting and laying out content, such as article titles, pictures, tables, formulas, multi-level chapter titles, pagination, citations and bibliography.For  generating complex mathematical formulas, it performs well.
+     LaTex is a widely used text editing tool for scientific communication and publication in academia.Academic papers are frequently written with LaTex.
+    \citep{InternetArchiveBot_2022}
+
+\end{itemize}
+
+\subsection{Text Summarization}
+\begin{itemize}
+    \item
+    Text summarization is a natural language processing technique. It extracts the key content in the article to generate short text for expression.There are two main approaches for text summarization:extraction-based summarization and abstraction-based summarization.
+    \item
+    The result of Extraction-based summarization comes from text, which intercepts key text but does not modify the content. It conducts quantitative and qualitative analysis of text content to identify key sentences, important points, and main content. The result generated by Extraction-based summarization is the abstract of the article, which can be used to express the paragraph and the core content of the article in a refined manner.
+    \item
+    Abstraction-based summarization is a new way of generating a summary of the text content, and the text is refined and re-expressed. The text is structured and processed to establish a semantic model including the text structure relationship and content relationship. Through the constructed semantic model, it regenerates textual content that meets the needs of expression and reading.
+\end{itemize}
+
+\section{Inspiring Works}
+\begin{itemize}
+
+\end{itemize}
+
+%==================================================================================================================================
+\chapter{Analysis/Requirements}
+What is the problem that you want to solve, and how did you arrive at it?
+\section{Guidance}
+Make it clear how you derived the constrained form of your problem via a clear and logical process.
+
+%==================================================================================================================================
+\chapter{Design}
+How is this problem to be approached, without reference to specific implementation details?
+\section{Guidance}
+Design should cover the abstract design in such a way that someone else might be able to do what you did, but with a different language or library or tool.
+
+%==================================================================================================================================
+\chapter{Implementation}
+What did you do to implement this idea, and what technical achievements did you make?
+\section{Guidance}
+You can't talk about everything. Cover the high level first, then cover important, relevant or impressive details.
+
+
+
+\section{General points}
+
+These points apply to the whole dissertation, not just this chapter.
+
+
+
+\subsection{Figures}
+\emph{Always} refer to figures included, like Figure \ref{fig:relu}, in the body of the text. Include full, explanatory captions and make sure the figures look good on the page.
+You may include multiple figures in one float, as in Figure \ref{fig:synthetic}, using \texttt{subcaption}, which is enabled in the template.
+
+
+
+% Figures are important. Use them well.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/relu.pdf}
+
+    \caption{In figure captions, explain what the reader is looking at: ``A schematic of the rectifying linear unit, where $a$ is the output amplitude,
+    $d$ is a configurable dead-zone, and $Z_j$ is the input signal'', as well as why the reader is looking at this:
+    ``It is notable that there is no activation \emph{at all} below 0, which explains our initial results.''
+    \textbf{Use vector image formats (.pdf) where possible}. Size figures appropriately, and do not make them over-large or too small to read.
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:relu}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{images/synthetic.png}
+        \caption{Synthetic image, black on white.}
+        \label{fig:syn1}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{images/synthetic_2.png}
+        \caption{Synthetic image, white on black.}
+        \label{fig:syn2}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+    %(or a blank line to force the subfigure onto a new line)
+    \caption{Synthetic test images for edge detection algorithms. \subref{fig:syn1} shows various gray levels that require an adaptive algorithm. \subref{fig:syn2}
+    shows more challenging edge detection tests that have crossing lines. Fusing these into full segments typically requires algorithms like the Hough transform.
+    This is an example of using subfigures, with \texttt{subref}s in the caption.
+    }\label{fig:synthetic}
+\end{figure}
+
+\clearpage
+
+\subsection{Equations}
+
+Equations should be typeset correctly and precisely. Make sure you get parenthesis sizing correct, and punctuate equations correctly
+(the comma is important and goes \textit{inside} the equation block). Explain any symbols used clearly if not defined earlier.
+
+For example, we might define:
+\begin{equation}
+    \hat{f}(\xi) = \frac{1}{2}\left[ \int_{-\infty}^{\infty} f(x) e^{2\pi i x \xi} \right],
+\end{equation}
+where $\hat{f}(\xi)$ is the Fourier transform of the time domain signal $f(x)$.
+
+\subsection{Algorithms}
+Algorithms can be set using \texttt{algorithm2e}, as in Algorithm \ref{alg:metropolis}.
+
+% NOTE: line ends are denoted by \; in algorithm2e
+\begin{algorithm}
+    \DontPrintSemicolon
+    \KwData{$f_X(x)$, a probability density function returing the density at $x$.\; $\sigma$ a standard deviation specifying the spread of the proposal distribution.\;
+    $x_0$, an initial starting condition.}
+    \KwResult{$s=[x_1, x_2, \dots, x_n]$, $n$ samples approximately drawn from a distribution with PDF $f_X(x)$.}
+    \Begin{
+        $s \longleftarrow []$\;
+        $p \longleftarrow f_X(x)$\;
+        $i \longleftarrow 0$\;
+        \While{$i < n$}
+        {
+            $x^\prime \longleftarrow \mathcal{N}(x, \sigma^2)$\;
+            $p^\prime \longleftarrow f_X(x^\prime)$\;
+            $a \longleftarrow \frac{p^\prime}{p}$\;
+            $r \longleftarrow U(0,1)$\;
+            \If{$r<a$}
+            {
+                $x \longleftarrow x^\prime$\;
+                $p \longleftarrow f_X(x)$\;
+                $i \longleftarrow i+1$\;
+                append $x$ to $s$\;
+            }
+        }
+    }
+
+\caption{The Metropolis-Hastings MCMC algorithm for drawing samples from arbitrary probability distributions,
+specialised for normal proposal distributions $q(x^\prime|x) = \mathcal{N}(x, \sigma^2)$. The symmetry of the normal distribution means the acceptance rule takes the simplified form.}\label{alg:metropolis}
+\end{algorithm}
+
+\subsection{Tables}
+
+If you need to include tables, like Table \ref{tab:operators}, use a tool like https://www.tablesgenerator.com/ to generate the table as it is
+extremely tedious otherwise.
+
+\begin{table}[]
+    \caption{The standard table of operators in Python, along with their functional equivalents from the \texttt{operator} package. Note that table
+    captions go above the table, not below. Do not add additional rules/lines to tables. }\label{tab:operators}
+    %\tt
+    \rowcolors{2}{}{gray!3}
+    \begin{tabular}{@{}lll@{}}
+    %\toprule
+    \textbf{Operation}    & \textbf{Syntax}                & \textbf{Function}                            \\ %\midrule % optional rule for header
+    Addition              & \texttt{a + b}                          & \texttt{add(a, b)}                                    \\
+    Concatenation         & \texttt{seq1 + seq2}                    & \texttt{concat(seq1, seq2)}                           \\
+    Containment Test      & \texttt{obj in seq}                     & \texttt{contains(seq, obj)}                           \\
+    Division              & \texttt{a / b}                          & \texttt{div(a, b) }  \\
+    Division              & \texttt{a / b}                          & \texttt{truediv(a, b) } \\
+    Division              & \texttt{a // b}                         & \texttt{floordiv(a, b)}                               \\
+    Bitwise And           & \texttt{a \& b}                         & \texttt{and\_(a, b)}                                  \\
+    Bitwise Exclusive Or  & \texttt{a \textasciicircum b}           & \texttt{xor(a, b)}                                    \\
+    Bitwise Inversion     & \texttt{$\sim$a}                        & \texttt{invert(a)}                                    \\
+    Bitwise Or            & \texttt{a | b}                          & \texttt{or\_(a, b)}                                   \\
+    Exponentiation        & \texttt{a ** b}                         & \texttt{pow(a, b)}                                    \\
+    Identity              & \texttt{a is b}                         & \texttt{is\_(a, b)}                                   \\
+    Identity              & \texttt{a is not b}                     & \texttt{is\_not(a, b)}                                \\
+    Indexed Assignment    & \texttt{obj{[}k{]} = v}                 & \texttt{setitem(obj, k, v)}                           \\
+    Indexed Deletion      & \texttt{del obj{[}k{]}}                 & \texttt{delitem(obj, k)}                              \\
+    Indexing              & \texttt{obj{[}k{]}}                     & \texttt{getitem(obj, k)}                              \\
+    Left Shift            & \texttt{a \textless{}\textless b}       & \texttt{lshift(a, b)}                                 \\
+    Modulo                & \texttt{a \% b}                         & \texttt{mod(a, b)}                                    \\
+    Multiplication        & \texttt{a * b}                          & \texttt{mul(a, b)}                                    \\
+    Negation (Arithmetic) & \texttt{- a}                            & \texttt{neg(a)}                                       \\
+    Negation (Logical)    & \texttt{not a}                          & \texttt{not\_(a)}                                     \\
+    Positive              & \texttt{+ a}                            & \texttt{pos(a)}                                       \\
+    Right Shift           & \texttt{a \textgreater{}\textgreater b} & \texttt{rshift(a, b)}                                 \\
+    Sequence Repetition   & \texttt{seq * i}                        & \texttt{repeat(seq, i)}                               \\
+    Slice Assignment      & \texttt{seq{[}i:j{]} = values}          & \texttt{setitem(seq, slice(i, j), values)}            \\
+    Slice Deletion        & \texttt{del seq{[}i:j{]}}               & \texttt{delitem(seq, slice(i, j))}                    \\
+    Slicing               & \texttt{seq{[}i:j{]}}                   & \texttt{getitem(seq, slice(i, j))}                    \\
+    String Formatting     & \texttt{s \% obj}                       & \texttt{mod(s, obj)}                                  \\
+    Subtraction           & \texttt{a - b}                          & \texttt{sub(a, b)}                                    \\
+    Truth Test            & \texttt{obj}                            & \texttt{truth(obj)}                                   \\
+    Ordering              & \texttt{a \textless b}                  & \texttt{lt(a, b)}                                     \\
+    Ordering              & \texttt{a \textless{}= b}               & \texttt{le(a, b)}                                     \\
+    % \bottomrule
+    \end{tabular}
+    \end{table}
+\subsection{Code}
+
+Avoid putting large blocks of code in the report (more than a page in one block, for example). Use syntax highlighting if possible, as in Listing \ref{lst:callahan}.
+
+\begin{lstlisting}[language=python, float, caption={The algorithm for packing the $3\times 3$ outer-totalistic binary CA successor rule into a
+    $16\times 16\times 16\times 16$ 4 bit lookup table, running an equivalent, notionally 16-state $2\times 2$ CA.}, label=lst:callahan]
+    def create_callahan_table(rule="b3s23"):
+        """Generate the lookup table for the cells."""
+        s_table = np.zeros((16, 16, 16, 16), dtype=np.uint8)
+        birth, survive = parse_rule(rule)
+
+        # generate all 16 bit strings
+        for iv in range(65536):
+            bv = [(iv >> z) & 1 for z in range(16)]
+            a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p = bv
+
+            # compute next state of the inner 2x2
+            nw = apply_rule(f, a, b, c, e, g, i, j, k)
+            ne = apply_rule(g, b, c, d, f, h, j, k, l)
+            sw = apply_rule(j, e, f, g, i, k, m, n, o)
+            se = apply_rule(k, f, g, h, j, l, n, o, p)
+
+            # compute the index of this 4x4
+            nw_code = a | (b << 1) | (e << 2) | (f << 3)
+            ne_code = c | (d << 1) | (g << 2) | (h << 3)
+            sw_code = i | (j << 1) | (m << 2) | (n << 3)
+            se_code = k | (l << 1) | (o << 2) | (p << 3)
+
+            # compute the state for the 2x2
+            next_code = nw | (ne << 1) | (sw << 2) | (se << 3)
+
+            # get the 4x4 index, and write into the table
+            s_table[nw_code, ne_code, sw_code, se_code] = next_code
+
+        return s_table
+
+\end{lstlisting}
+
+%==================================================================================================================================
+\chapter{Evaluation}
+How good is your solution? How well did you solve the general problem, and what evidence do you have to support that?
+
+\section{Guidance}
+\begin{itemize}
+    \item
+        Ask specific questions that address the general problem.
+    \item
+        Answer them with precise evidence (graphs, numbers, statistical
+        analysis, qualitative analysis).
+    \item
+        Be fair and be scientific.
+    \item
+        The key thing is to show that you know how to evaluate your work, not
+        that your work is the most amazing product ever.
+\end{itemize}
+
+\section{Evidence}
+Make sure you present your evidence well. Use appropriate visualisations, reporting techniques and statistical analysis, as appropriate.
+
+If you visualise, follow the basic rules, as illustrated in Figure \ref{fig:boxplot}:
+\begin{itemize}
+\item Label everything correctly (axis, title, units).
+\item Caption thoroughly.
+\item Reference in text.
+\item \textbf{Include appropriate display of uncertainty (e.g. error bars, Box plot)}
+\item Minimize clutter.
+\end{itemize}
+
+See the file \texttt{guide\_to\_visualising.pdf} for further information and guidance.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\linewidth]{images/boxplot_finger_distance.pdf}
+
+    \caption{Average number of fingers detected by the touch sensor at different heights above the surface, averaged over all gestures. Dashed lines indicate
+    the true number of fingers present. The Box plots include bootstrapped uncertainty notches for the median. It is clear that the device is biased toward
+    undercounting fingers, particularly at higher $z$ distances.
+    }
+
+    % use the notation fig:name to cross reference a figure
+    \label{fig:boxplot}
+\end{figure}
+
+
+%==================================================================================================================================
+\chapter{Conclusion}
+Summarise the whole project for a lazy reader who didn't read the rest (e.g. a prize-awarding committee).
+\section{Guidance}
+\begin{itemize}
+    \item
+        Summarise briefly and fairly.
+    \item
+        You should be addressing the general problem you introduced in the
+        Introduction.
+    \item
+        Include summary of concrete results (``the new compiler ran 2x
+        faster'')
+    \item
+        Indicate what future work could be done, but remember: \textbf{you
+        won't get credit for things you haven't done}.
+\end{itemize}
+
+%==================================================================================================================================
+%
+%
+%==================================================================================================================================
+%  APPENDICES
+
+\begin{appendices}
+
+\chapter{Appendices}
+
+Typical inclusions in the appendices are:
+
+\begin{itemize}
+\item
+  Copies of ethics approvals (required if obtained)
+\item
+  Copies of questionnaires etc. used to gather data from subjects.
+\item
+  Extensive tables or figures that are too bulky to fit in the main body of
+  the report, particularly ones that are repetitive and summarised in the body.
+
+\item Outline of the source code (e.g. directory structure), or other architecture documentation like class diagrams.
+
+\item User manuals, and any guides to starting/running the software.
+
+\end{itemize}
+
+\textbf{Don't include your source code in the appendices}. It will be
+submitted separately.
+
+\end{appendices}
+
+%==================================================================================================================================
+%   BIBLIOGRAPHY
+
+% The bibliography style is abbrvnat
+% The bibliography always appears last, after the appendices.
+
+\bibliographystyle{abbrvnat}
+
+\bibliography{l4proj}
+
+\end{document}
