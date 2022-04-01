@@ -1,0 +1,18 @@
+User Guide
+
+Environment
+Users need a software environment which can install and execute Python files. Users also need a
+LaTeX compiler and editor.
+
+Step
+Please follow those steps to use this product:
+1.Place the ZIP file of the academic paper to be generated for PPT and the PPT_𝐺𝑒𝑛𝑒𝑟𝑎𝑡𝑜𝑟 .𝑝𝑦 𝑓 𝑖𝑙𝑒𝑖𝑛𝑡ℎ𝑒𝑠𝑎𝑚𝑒 𝑓 𝑜𝑙𝑑𝑒𝑟 .
+2.Execute the PPT𝐺𝑒𝑛𝑒𝑟𝑎𝑡𝑜𝑟 .𝑝𝑦 𝑓 𝑖𝑙𝑒.𝐷𝑜𝑤𝑛𝑙𝑜𝑎𝑑𝑟𝑒𝑙𝑒𝑣𝑎𝑛𝑡𝑃𝑦𝑡ℎ𝑜𝑛𝑝𝑎𝑐𝑘𝑎𝑔𝑒𝑠𝑖 𝑓 𝑡ℎ𝑒𝑢𝑠𝑒𝑟𝑑𝑜𝑒𝑠𝑛′
+𝑡ℎ𝑎𝑣𝑒𝑡ℎ𝑒𝑚𝑏𝑒 𝑓 𝑜𝑟𝑒.
+3.Input the target ZIP file name.
+4.Input the target main LaTeX file name.
+5.The ppt.tex file is created by PPT𝐺𝑒𝑛𝑒𝑟𝑎𝑡𝑜𝑟 .𝑝𝑦.
+6.Compile ppt.tex with local LaTeX compiler or online LaTeX compiler such as overleaf.
+7.ppt.PDF is created by LaTeX compiler and ppt.tex
+8.After viewing the ppt.PDF, post-editing the ppt.tex.
+9.The PPT of the academic paper which can be used in formal situations are created!
