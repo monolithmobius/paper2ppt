@@ -7,4 +7,4 @@
 * `status_report/` the status report submitted in December
 * `meetings/` Records of the meetings I have during the project.
 * `dissertation/` source and for my project dissertation
-* `presentation/` my presentation: noted that my presentation PPT is generated from this project by PPT_Generator.py. I didn't do post-editing for showing the performance of my program with my own dissertation paper file in LaTeX.
+* `presentation/` my presentation
